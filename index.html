@@ -1,0 +1,2489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Dr. Karan’s Emergency Clinic for Suhani 🩺</title>
+  <!-- Google Fonts: Fredoka and Quicksand for consistent readable typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&family=Fredoka:wght@500;600;700&family=Pacifico&family=Quicksand:wght@500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg1: #ffe3ee;
+      --bg2: #e3f1ff;
+      --card: #fffdfb;
+      --card-sub: #fff4f8;
+      --ink: #4a2f5a;
+      --ink-soft: #6e5082;
+      --sun: #ffd23f;
+      --pink: #ff7aa8;
+      --mint: #b7ecc6;
+      --sky: #a9dcff;
+      --lil: #d9c2ff;
+      --peach: #ffbe98;
+      --line: #4a2f5a;
+      --shadow: 5px 5px 0 var(--line);
+      --shadow-sm: 3px 3px 0 var(--line);
+      box-sizing: border-box;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg1: #241934;
+        --bg2: #19253c;
+        --card: #33274a;
+        --card-sub: #3e3059;
+        --ink: #fff1f6;
+        --ink-soft: #dfd0eb;
+        --line: #ffcee0;
+      }
+    }
+
+    :root[data-theme="dark"] {
+      --bg1: #241934;
+      --bg2: #19253c;
+      --card: #33274a;
+      --card-sub: #3e3059;
+      --ink: #fff1f6;
+      --ink-soft: #dfd0eb;
+      --line: #ffcee0;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      background: linear-gradient(160deg, var(--bg1), var(--bg2)) fixed;
+      font: 600 16.5px/1.55 "Quicksand", system-ui, sans-serif;
+      overflow-x: hidden;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 36px);
+    }
+
+    h1, h2, h3 {
+      font-family: "Fredoka", system-ui, sans-serif;
+      line-height: 1.15;
+      margin: 0.2em 0;
+      text-align: center;
+    }
+
+    h1 { font-size: clamp(1.85rem, 7.5vw, 2.65rem); font-weight: 800; }
+    h2 { font-size: clamp(1.45rem, 5.8vw, 1.9rem); font-weight: 800; }
+    h3 { font-size: 1.2rem; font-weight: 800; }
+
+    main {
+      max-width: 580px;
+      margin: 0 auto;
+      padding: 6px 16px 86px;
+    }
+
+    /* Sticky Top Utility & Ward Switcher Bar */
+    .sticky-header {
+      position: sticky;
+      top: env(safe-area-inset-top, 0px);
+      z-index: 30;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      background: rgba(255, 243, 248, 0.72);
+      border-bottom: 2.5px solid rgba(74, 47, 90, 0.14);
+    }
+
+    :root[data-theme="dark"] .sticky-header {
+      background: rgba(36, 25, 52, 0.78);
+      border-bottom-color: rgba(255, 206, 224, 0.16);
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      max-width: 580px;
+      margin: 0 auto;
+      padding: 9px 16px 6px;
+    }
+
+    .ward-nav {
+      display: flex;
+      gap: 7px;
+      overflow-x: auto;
+      max-width: 580px;
+      margin: 0 auto;
+      padding: 4px 16px 10px;
+      scrollbar-width: none;
+    }
+
+    .ward-nav::-webkit-scrollbar {
+      display: none;
+    }
+
+    .ward-tab {
+      flex: 0 0 auto;
+      font: 800 13.5px "Fredoka", sans-serif;
+      color: var(--ink);
+      background: var(--card);
+      border: 2.5px solid var(--line);
+      border-radius: 999px;
+      padding: 4px 12px;
+      box-shadow: 2px 2px 0 var(--line);
+      cursor: pointer;
+      transition: transform 0.1s ease, background 0.15s ease;
+      text-decoration: none;
+    }
+
+    .ward-tab.active {
+      background: var(--sun);
+      color: #4a2f5a;
+      transform: translateY(-1px);
+    }
+
+    .ward-tab:active {
+      transform: translate(2px, 2px);
+      box-shadow: 0 0 0 var(--line);
+    }
+
+    .pill {
+      font: 800 14px "Fredoka", sans-serif;
+      color: var(--ink);
+      background: var(--card);
+      border: 3px solid var(--line);
+      border-radius: 999px;
+      padding: 4px 12px;
+      box-shadow: var(--shadow-sm);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: transform 0.1s ease;
+    }
+
+    .pill:active {
+      transform: translate(2px, 2px);
+      box-shadow: 1px 1px 0 var(--line);
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 7px;
+      align-items: center;
+    }
+
+    /* Multi-Page Views */
+    .page-view {
+      display: none;
+      animation: pageSlide 0.28s cubic-bezier(0.25, 1.35, 0.5, 1);
+    }
+
+    .page-view.active {
+      display: block;
+    }
+
+    @keyframes pageSlide {
+      from { opacity: 0; transform: translateY(10px) scale(0.985); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .c { text-align: center; }
+
+    .card {
+      background: var(--card);
+      border: 3px solid var(--line);
+      border-radius: 26px;
+      box-shadow: var(--shadow);
+      padding: 20px 18px;
+      margin: 14px 0;
+    }
+
+    .sub-note {
+      text-align: center;
+      font-size: 14.5px;
+      color: var(--ink-soft);
+      margin: 4px 0 12px;
+    }
+
+    button.btn {
+      font: 800 17px "Fredoka", sans-serif;
+      color: #4a2f5a;
+      background: var(--sun);
+      border: 3px solid var(--line);
+      border-radius: 18px;
+      padding: 10px 18px;
+      box-shadow: 4px 4px 0 var(--line);
+      cursor: pointer;
+      transition: transform 0.1s ease, background 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+    }
+
+    button.btn:active {
+      transform: translate(3px, 3px);
+      box-shadow: 1px 1px 0 var(--line);
+    }
+
+    button.btn.pink { background: var(--pink); color: #3a183b; }
+    button.btn.mint { background: var(--mint); color: #1f4730; }
+    button.btn.sky { background: var(--sky); color: #1f3b5c; }
+    button.btn.lil { background: var(--lil); color: #382157; }
+    button.btn.peach { background: var(--peach); color: #4a2515; }
+    button.btn.sm { font-size: 14.5px; padding: 7px 14px; border-radius: 14px; }
+
+    .row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 12px 0;
+    }
+
+    .ward-pager {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    /* Hero Floating Icon & Triage Box */
+    .hero-emoji {
+      font-size: 80px;
+      display: inline-block;
+      animation: bob 3s ease-in-out infinite;
+      margin-bottom: 2px;
+    }
+
+    @keyframes bob {
+      50% { transform: translateY(-9px) rotate(4deg); }
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: var(--pink);
+      color: #3a183b;
+      border: 2.5px solid var(--line);
+      border-radius: 999px;
+      padding: 3px 14px;
+      font: 800 13.5px "Fredoka", sans-serif;
+      margin-bottom: 8px;
+      box-shadow: 2px 2px 0 var(--line);
+    }
+
+    .triage-alert {
+      background: var(--card-sub);
+      border: 2.5px dashed var(--line);
+      border-radius: 18px;
+      padding: 13px 14px;
+      margin: 12px 0 4px;
+      text-align: left;
+      font-size: 14.5px;
+    }
+
+    .ward-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 11px;
+      margin-top: 12px;
+    }
+
+    @media (min-width: 470px) {
+      .ward-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    .ward-tile {
+      background: var(--card-sub);
+      border: 3px solid var(--line);
+      border-radius: 20px;
+      padding: 14px;
+      box-shadow: 4px 4px 0 var(--line);
+      cursor: pointer;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: transform 0.12s ease;
+    }
+
+    .ward-tile:active {
+      transform: translate(2px, 2px);
+      box-shadow: 1px 1px 0 var(--line);
+    }
+
+    .ward-tile-ico {
+      font-size: 34px;
+      flex-shrink: 0;
+    }
+
+    .ward-tile-title {
+      font: 800 16.5px "Fredoka", sans-serif;
+      display: block;
+      color: var(--ink);
+    }
+
+    .ward-tile-sub {
+      font-size: 13px;
+      color: var(--ink-soft);
+      display: block;
+      line-height: 1.3;
+    }
+
+    /* Page 2: Classified Medical Case Files (Envelopes) */
+    .env-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    @media (min-width: 480px) {
+      .env-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    .env-card {
+      background: var(--card-sub);
+      border: 3px solid var(--line);
+      border-radius: 22px;
+      padding: 15px 14px;
+      box-shadow: 4px 4px 0 var(--line);
+      cursor: pointer;
+      transition: transform 0.16s ease, background 0.2s ease;
+      text-align: center;
+      user-select: none;
+    }
+
+    .env-card:active {
+      transform: translate(2px, 2px);
+      box-shadow: 1px 1px 0 var(--line);
+    }
+
+    .env-card.opened {
+      background: var(--card);
+      grid-column: 1 / -1;
+      text-align: left;
+      padding: 18px;
+      animation: popIn 0.3s cubic-bezier(0.3, 1.5, 0.5, 1);
+    }
+
+    .env-flap {
+      font-size: 36px;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .env-title {
+      font: 800 16.5px "Fredoka", sans-serif;
+      display: block;
+      color: var(--ink);
+    }
+
+    .env-tap-hint {
+      font-size: 12.5px;
+      color: var(--ink-soft);
+      display: block;
+      margin-top: 4px;
+    }
+
+    .env-letter-box {
+      background: #fffdf7;
+      color: #3d244c;
+      border: 2.5px dashed #c8a8d8;
+      border-radius: 16px;
+      padding: 14px 16px;
+      margin-top: 10px;
+      font: 600 1.46rem/1.36 "Caveat", cursive;
+      white-space: pre-wrap;
+    }
+
+    .env-header-open {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    /* Page 3: Pharmacy Pill & Meme Jar */
+    .filter-pills {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: 8px 0 12px;
+    }
+
+    .cat-pill {
+      font: 800 14px "Fredoka", sans-serif;
+      color: var(--ink);
+      background: var(--card-sub);
+      border: 2.5px solid var(--line);
+      border-radius: 999px;
+      padding: 5px 13px;
+      box-shadow: 2px 2px 0 var(--line);
+      cursor: pointer;
+    }
+
+    .cat-pill.active {
+      background: var(--sky);
+      color: #1f3b5c;
+    }
+
+    .jar-stage {
+      background: linear-gradient(145deg, var(--card-sub), rgba(217, 194, 255, 0.28));
+      border: 3px dashed var(--line);
+      border-radius: 22px;
+      padding: 18px 16px;
+      margin: 10px 0;
+      text-align: center;
+    }
+
+    .jar-emoji {
+      font-size: 62px;
+      display: inline-block;
+      cursor: pointer;
+    }
+
+    .jar-emoji.shake {
+      animation: jarShake 0.42s ease;
+    }
+
+    @keyframes jarShake {
+      0%, 100% { transform: rotate(0deg) scale(1); }
+      25% { transform: rotate(-14deg) scale(1.12); }
+      50% { transform: rotate(14deg) scale(1.12); }
+      75% { transform: rotate(-6deg) scale(1.05); }
+    }
+
+    .jar-note {
+      background: #fffdf7;
+      color: #3d244c;
+      border: 3px solid var(--line);
+      border-radius: 20px;
+      padding: 16px;
+      margin: 14px 0 10px;
+      box-shadow: 3px 3px 0 var(--line);
+      font: 600 1.5rem/1.35 "Caveat", cursive;
+      min-height: 115px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .jar-tag {
+      font: 800 12.5px "Fredoka", sans-serif;
+      background: var(--sun);
+      color: #4a2f5a;
+      border: 2px solid #3d244c;
+      border-radius: 999px;
+      padding: 2px 11px;
+      margin-bottom: 8px;
+      display: inline-block;
+    }
+
+    /* Page 4: Official Hospital Prescription Pad */
+    .rx-paper {
+      background: #fffdf7;
+      color: #3d244c;
+      border: 3px solid var(--line);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      padding: 20px 18px;
+      margin: 14px 0;
+    }
+
+    .rx-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      border-bottom: 2.5px dashed #c8a8d8;
+      padding-bottom: 10px;
+      margin-bottom: 12px;
+    }
+
+    .rx-stamp {
+      background: var(--pink);
+      color: #3a183b;
+      border: 2px solid #3d244c;
+      border-radius: 999px;
+      padding: 2px 11px;
+      font: 800 13px "Fredoka", sans-serif;
+      transform: rotate(-2deg);
+    }
+
+    .rx-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #fff4f8;
+      border: 2.5px solid #4a2f5a;
+      border-radius: 16px;
+      padding: 11px 14px;
+      margin: 9px 0;
+      cursor: pointer;
+      transition: transform 0.1s ease, background 0.2s ease;
+      user-select: none;
+    }
+
+    .rx-item:active {
+      transform: translate(2px, 2px);
+    }
+
+    .rx-item.checked {
+      background: var(--mint);
+      color: #1c442c;
+    }
+
+    .rx-box {
+      width: 26px;
+      height: 26px;
+      border: 2.5px solid #4a2f5a;
+      border-radius: 8px;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+      font-weight: 800;
+    }
+
+    .rx-item.checked .rx-box {
+      background: var(--sun);
+    }
+
+    .rx-label {
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.35;
+    }
+
+    .rx-item.checked .rx-label {
+      text-decoration: line-through;
+      opacity: 0.85;
+    }
+
+    .cert-box {
+      margin-top: 16px;
+      background: linear-gradient(135deg, #fff5c8, #ffe5f0);
+      border: 3px double #4a2f5a;
+      border-radius: 20px;
+      padding: 16px;
+      text-align: center;
+      color: #3d244c;
+    }
+
+    /* Page 5: Patient Vitals & X-Ray Scan */
+    .xray-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    @media (min-width: 480px) {
+      .xray-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    .xray-card {
+      background: #232a47;
+      color: #a9f5ff;
+      border: 3px solid var(--line);
+      border-radius: 22px;
+      padding: 16px 14px;
+      box-shadow: 4px 4px 0 var(--line);
+      cursor: pointer;
+      text-align: center;
+      transition: transform 0.15s ease, background 0.25s ease;
+      min-height: 148px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .xray-card.scanned {
+      background: var(--card);
+      color: var(--ink);
+    }
+
+    .xray-badge {
+      font: 800 12px "Fredoka", sans-serif;
+      background: #364575;
+      color: #8ceeff;
+      border: 2px solid #8ceeff;
+      border-radius: 999px;
+      padding: 2px 10px;
+      margin-bottom: 8px;
+    }
+
+    .xray-card.scanned .xray-badge {
+      background: var(--mint);
+      color: #1f4730;
+      border-color: var(--line);
+    }
+
+    /* Page 6: VIP Hospital Vouchers */
+    .coupon-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .coupon-card {
+      background: var(--card-sub);
+      border: 3px dashed var(--line);
+      border-radius: 22px;
+      padding: 15px 16px;
+      box-shadow: 4px 4px 0 var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      transition: background 0.2s ease;
+    }
+
+    .coupon-card.redeemed {
+      background: var(--mint);
+      color: #1f4730;
+      border-style: solid;
+    }
+
+    .coupon-info {
+      text-align: left;
+    }
+
+    .coupon-title {
+      font: 800 17px "Fredoka", sans-serif;
+      display: block;
+    }
+
+    .coupon-desc {
+      font-size: 13.5px;
+      opacity: 0.9;
+      display: block;
+      margin-top: 2px;
+    }
+
+    /* Page 7: Intensive Hug Unit (IHU) */
+    .hug-orb {
+      width: 136px;
+      height: 136px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 35% 30%, #ffe8f1, #ff8eb7);
+      border: 4px solid var(--line);
+      box-shadow: 0 7px 0 var(--line);
+      font-size: 66px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      margin: 10px auto;
+      transition: transform 0.1s cubic-bezier(0.3, 1.6, 0.5, 1);
+      user-select: none;
+    }
+
+    .hug-orb:active {
+      transform: scale(0.9) translateY(4px);
+      box-shadow: 0 2px 0 var(--line);
+    }
+
+    .hug-counter-pill {
+      display: inline-block;
+      background: var(--lil);
+      color: #382157;
+      border: 2.5px solid var(--line);
+      border-radius: 999px;
+      padding: 4px 16px;
+      font: 800 15.5px "Fredoka", sans-serif;
+      margin: 6px 0 10px;
+      box-shadow: 2px 2px 0 var(--line);
+    }
+
+    .hug-status {
+      font: 600 1.48rem/1.35 "Caveat", cursive;
+      background: var(--card-sub);
+      border: 2.5px dashed var(--line);
+      border-radius: 18px;
+      padding: 12px 14px;
+      margin: 10px 0 14px;
+      color: var(--ink);
+    }
+
+    .reply-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 9px;
+      margin-top: 10px;
+    }
+
+    .reply-btn {
+      background: var(--card-sub);
+      color: var(--ink);
+      border: 2.5px solid var(--line);
+      border-radius: 16px;
+      padding: 11px 14px;
+      box-shadow: 3px 3px 0 var(--line);
+      font: 700 14.5px "Quicksand", sans-serif;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .reply-btn:active {
+      transform: translate(2px, 2px);
+      box-shadow: 1px 1px 0 var(--line);
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 22px;
+      left: 50%;
+      transform: translateX(-50%) translateY(90px);
+      background: var(--sun);
+      color: #4a2f5a;
+      border: 3px solid var(--line);
+      border-radius: 999px;
+      padding: 9px 18px;
+      font: 800 15px "Fredoka", sans-serif;
+      box-shadow: 4px 4px 0 var(--line);
+      z-index: 60;
+      opacity: 0;
+      transition: transform 0.28s cubic-bezier(0.3, 1.5, 0.5, 1), opacity 0.2s ease;
+      pointer-events: none;
+      max-width: 90vw;
+      text-align: center;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* Floating Confetti & Hearts */
+    .fx {
+      position: fixed;
+      pointer-events: none;
+      z-index: 50;
+      top: -20px;
+    }
+
+    .cf {
+      width: 10px;
+      height: 14px;
+      border-radius: 3px;
+      animation: fall linear forwards;
+    }
+
+    @keyframes fall {
+      to { transform: translateY(112vh) rotate(720deg); }
+    }
+
+    .bl {
+      font-size: 36px;
+      bottom: -55px;
+      top: auto;
+      animation: rise ease-out forwards;
+    }
+
+    @keyframes rise {
+      to { transform: translateY(-115vh) translateX(20px); }
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.92); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+
+    /* Soft romantic typing + floating sparkle effects */
+    .typing-text::after {
+      content: "▍";
+      display: inline-block;
+      color: #ff6f9f;
+      margin-left: 2px;
+      animation: cursorBlink .75s steps(2, start) infinite;
+    }
+    @keyframes cursorBlink { to { opacity: 0; } }
+    .env-card.opened { animation: letterOpen .55s cubic-bezier(.2,1.35,.4,1); }
+    @keyframes letterOpen {
+      0% { opacity: 0; transform: perspective(700px) rotateX(-12deg) translateY(14px) scale(.96); }
+      65% { transform: perspective(700px) rotateX(3deg) translateY(-3px) scale(1.01); }
+      100% { opacity: 1; transform: perspective(700px) rotateX(0) translateY(0) scale(1); }
+    }
+    .jar-note, .hug-status { position: relative; overflow: hidden; }
+    .jar-note::before, .hug-status::before {
+      content: "♡  ✦  ♡"; position: absolute; top: 5px; right: 10px;
+      color: #ff8eb7; opacity: .55; font: 700 14px "Quicksand", sans-serif;
+      animation: tinyDrift 3s ease-in-out infinite;
+    }
+    @keyframes tinyDrift { 50% { transform: translateY(-5px) rotate(8deg); opacity: .9; } }
+    .hero-emoji { filter: drop-shadow(0 7px 7px #ff9fbd66); }
+    .heart-pop {
+      position: fixed; z-index: 70; pointer-events: none; font-size: 22px;
+      animation: heartPop 1.25s ease-out forwards;
+    }
+    @keyframes heartPop {
+      0% { opacity: 0; transform: translateY(8px) scale(.4) rotate(-15deg); }
+      20% { opacity: 1; }
+      100% { opacity: 0; transform: translateY(-95px) scale(1.35) rotate(18deg); }
+    }
+
+    /* Keep the clinic map hidden on the welcome screen so the surprises stay secret. */
+    body.at-home .ward-nav { display: none; }
+    .welcome-teaser {
+      margin-top: 14px; padding: 16px; border: 2px dashed var(--line);
+      border-radius: 20px; background: var(--card-sub); text-align: center;
+    }
+    .surprise-stage {
+      min-height: 125px; display: grid; place-items: center; text-align: center;
+      padding: 20px; margin: 14px 0; border: 3px dashed var(--line);
+      border-radius: 22px; background: var(--card-sub); font-size: 18px;
+      line-height: 1.5;
+    }
+    .surprise-icon { font-size: 54px; display: block; animation: bob 2.4s ease-in-out infinite; }
+    .secret-seal { font-size: 62px; display: inline-block; cursor: pointer; transition: transform .2s ease; }
+    .secret-seal:active { transform: scale(.88) rotate(-12deg); }
+    .tiny-progress { color: var(--ink-soft); font-size: 13px; text-align: center; margin-top: 8px; }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition: none !important; }
+    }
+
+    /* SWEET PINK EDITION — fixed palette and softer, rounded typography */
+    :root {
+      color-scheme: light;
+      --bg1: #fff0f6;
+      --bg2: #ffe0ec;
+      --card: #fffafd;
+      --card-sub: #fff0f6;
+      --ink: #713b58;
+      --ink-soft: #a46a86;
+      --sun: #ffd6e7;
+      --pink: #ff8fba;
+      --mint: #ffd7e8;
+      --sky: #f7c9df;
+      --lil: #e9c9f4;
+      --peach: #ffcbbd;
+      --line: #d8759e;
+      --shadow: 4px 5px 0 #e8a1bd;
+      --shadow-sm: 2px 3px 0 #e8a1bd;
+    }
+    body { font-family: "Quicksand", system-ui, sans-serif; background:
+      radial-gradient(circle at 8% 8%, #fff 0 3px, transparent 4px),
+      radial-gradient(circle at 92% 18%, #ffd1e3 0 5px, transparent 6px),
+      linear-gradient(160deg, #fff4f8, #ffe3ef 55%, #fff0f6) fixed; }
+    h1, h2, h3, .ward-tab, .pill, button.btn { font-family: "Fredoka", system-ui, sans-serif; }
+    h1 { color: #c24f83; letter-spacing: .2px; }
+    h2 { color: #bf5b88; }
+    .sticky-header, :root[data-theme="dark"] .sticky-header {
+      background: rgba(255, 241, 247, .94);
+      border-bottom: 1px solid #f2c3d7;
+    }
+    /* No page directory or page-name strip: each room is discovered in sequence. */
+    .ward-nav, body.at-home .ward-nav { display: none !important; }
+    .hero-emoji { font-size: 54px; animation: bob 2.6s ease-in-out infinite; }
+    .pink-illustration { display:block; width:min(100%, 300px); height:auto; margin:4px auto 12px; filter: drop-shadow(0 8px 10px #d8759e2b); }
+    .card { border-color:#e79ab9; box-shadow: 0 8px 22px #d8759e1c, 3px 4px 0 #f2c4d7; }
+    .welcome-teaser { border-color:#e9a5c1; background:linear-gradient(145deg,#fff7fb,#ffe8f1); }
+    .surprise-stage { border-color:#e9a5c1; background:linear-gradient(145deg,#fff8fb,#ffebf3); }
+    .tiny-progress { color:#a46a86; }
+    .btn.pink { background:linear-gradient(135deg,#ff9fc3,#ffbad2); }
+    .ward-pager .btn { background:#ffe0ec; }
+    .cute-sticker { display:inline-block; padding:5px 10px; margin:3px; border-radius:999px; background:#fff0f6; border:1px solid #f1bfd3; color:#a64f78; font-size:13px; }
+    .topbar .pill { background:#fff8fb; border-color:#e79ab9; box-shadow:2px 3px 0 #f0c0d4; }
+
+    /* High-contrast, readable light theme */
+    :root[data-theme="light"] {
+      color-scheme: light;
+      --bg1:#fff0f6; --bg2:#ffe0ec; --card:#fffafd; --card-sub:#fff0f6;
+      --ink:#482238; --ink-soft:#684258; --line:#b95780;
+      --pink:#f58bb3; --sun:#ffe18a; --mint:#bcebd0; --sky:#bfe5ff;
+      --lil:#ddc9ff; --peach:#ffd0b5;
+    }
+    :root[data-theme="light"] body { color:#482238; }
+    :root[data-theme="light"] .pill,
+    :root[data-theme="light"] .topbar .pill,
+    :root[data-theme="light"] .ward-tab,
+    :root[data-theme="light"] .cat-pill {
+      color:#482238 !important; background:#fffafd; border-color:#c86b93;
+    }
+    :root[data-theme="light"] .topbar .pill { background:#fffafd; }
+    :root[data-theme="light"] h1 { color:#9f315f; }
+    :root[data-theme="light"] h2, :root[data-theme="light"] h3 { color:#a64270; }
+    :root[data-theme="light"] p, :root[data-theme="light"] li,
+    :root[data-theme="light"] .sub-note, :root[data-theme="light"] .ward-tile-sub,
+    :root[data-theme="light"] .env-tap-hint { color:#684258; }
+    :root[data-theme="light"] button { text-shadow:none; }
+
+    /* Deep plum night theme with readable text and controls */
+    :root[data-theme="dark"] {
+      color-scheme: dark;
+      --bg1:#17101f; --bg2:#28162d; --card:#332239; --card-sub:#40283b;
+      --ink:#fff2f7; --ink-soft:#f0cddd; --line:#e89abb;
+      --pink:#f28bb5; --sun:#f7d68b; --mint:#a9dfc1; --sky:#a9d9f5;
+      --lil:#d1b7f2; --peach:#f6b99c;
+    }
+    :root[data-theme="dark"] body {
+      color:#fff2f7;
+      background:
+        radial-gradient(circle at 12% 8%, #512744 0, transparent 32%),
+        linear-gradient(155deg,#17101f,#28162d 65%,#1c172b) fixed;
+    }
+    :root[data-theme="dark"] .sticky-header,
+    :root[data-theme="dark"] .sticky-header,
+    :root[data-theme="dark"] .topbar { background:rgba(29,17,34,.96); border-color:#68405b; }
+    :root[data-theme="dark"] .card,
+    :root[data-theme="dark"] .ward-tile,
+    :root[data-theme="dark"] .env-card,
+    :root[data-theme="dark"] .jar-stage,
+    :root[data-theme="dark"] .rx-paper,
+    :root[data-theme="dark"] .xray-card,
+    :root[data-theme="dark"] .coupon-card,
+    :root[data-theme="dark"] .welcome-teaser,
+    :root[data-theme="dark"] .surprise-stage,
+    :root[data-theme="dark"] .hug-stage,
+    :root[data-theme="dark"] .reply-btn {
+      background:#332239 !important; color:#fff2f7 !important;
+      border-color:#d78bad !important;
+    }
+    :root[data-theme="dark"] .pill,
+    :root[data-theme="dark"] .topbar .pill,
+    :root[data-theme="dark"] .ward-tab,
+    :root[data-theme="dark"] .cat-pill {
+      background:#493047 !important; color:#fff2f7 !important;
+      border-color:#e89abb !important; box-shadow:2px 3px 0 #6f405c;
+    }
+    :root[data-theme="dark"] h1 { color:#ffc1da !important; }
+    :root[data-theme="dark"] h2, :root[data-theme="dark"] h3 { color:#ffcee1 !important; }
+    :root[data-theme="dark"] p, :root[data-theme="dark"] li,
+    :root[data-theme="dark"] label, :root[data-theme="dark"] .sub-note,
+    :root[data-theme="dark"] .ward-tile-sub, :root[data-theme="dark"] .env-tap-hint,
+    :root[data-theme="dark"] .coupon-desc, :root[data-theme="dark"] .rx-label,
+    :root[data-theme="dark"] .tiny-progress { color:#f0dce7 !important; }
+    :root[data-theme="dark"] .env-letter-box,
+    :root[data-theme="dark"] .jar-note,
+    :root[data-theme="dark"] .rx-paper,
+    :root[data-theme="dark"] .prescription-note {
+      background:#fff7fb !important; color:#482238 !important;
+    }
+    :root[data-theme="dark"] button.btn { color:#351729; }
+    :root[data-theme="dark"] .cute-sticker { background:#513047; color:#ffe4ef; border-color:#d78bad; }
+    .theme-toggle { min-width:118px; justify-content:center; font-weight:700; }
+    .topbar .pill { color:#482238 !important; font-weight:700; }
+    button:focus-visible, a:focus-visible {
+      outline:3px solid #7b3b91; outline-offset:3px;
+    }
+    img, .pink-illustration, svg { max-width:100%; }
+    .pink-illustration { overflow:visible; }
+
+
+    /* VERSION 5: consistent typography + strong contrast in both themes */
+    body, body * {
+      font-family: "Quicksand", system-ui, sans-serif !important;
+      text-shadow: none !important;
+    }
+    h1, h2, h3, .ward-tab, .pill, button, .rx-stamp {
+      font-family: "Fredoka", "Quicksand", system-ui, sans-serif !important;
+      font-weight: 700 !important;
+    }
+    .cert-box > p {
+      font-family: "Quicksand", system-ui, sans-serif !important;
+      font-style: italic;
+      font-weight: 700 !important;
+      line-height: 1.55 !important;
+    }
+    .rx-progress, #rxProgress, .cert-box > div {
+      font-family: "Quicksand", system-ui, sans-serif !important;
+    }
+    /* Light theme: dark ink on pale surfaces, including inline-styled content */
+    :root[data-theme="light"] .rx-paper,
+    :root[data-theme="light"] .rx-item,
+    :root[data-theme="light"] .cert-box {
+      background: #fffafd !important;
+      color: #402238 !important;
+      border-color: #a94370 !important;
+    }
+    :root[data-theme="light"] .rx-paper *,
+    :root[data-theme="light"] .rx-item *,
+    :root[data-theme="light"] .cert-box * {
+      color: #402238 !important;
+      opacity: 1 !important;
+    }
+    :root[data-theme="light"] .rx-item.checked {
+      background: #d9f2df !important;
+    }
+    /* Dark theme: dark plum surfaces with bright, high-contrast text */
+    :root[data-theme="dark"] .rx-paper,
+    :root[data-theme="dark"] .rx-item,
+    :root[data-theme="dark"] .cert-box {
+      background: #38263d !important;
+      color: #fff5fa !important;
+      border-color: #f0a8c7 !important;
+    }
+    :root[data-theme="dark"] .rx-paper *,
+    :root[data-theme="dark"] .rx-item *,
+    :root[data-theme="dark"] .cert-box * {
+      color: #fff5fa !important;
+      opacity: 1 !important;
+    }
+    :root[data-theme="dark"] .rx-item.checked {
+      background: #315342 !important;
+    }
+    :root[data-theme="dark"] .rx-box {
+      background: #fffafd !important;
+      color: #38263d !important;
+      border-color: #f0a8c7 !important;
+    }
+    :root[data-theme="dark"] .cert-box {
+      background: linear-gradient(135deg, #49394d, #503044) !important;
+    }
+    /* Make text in every card readable even when older inline colors exist */
+    :root[data-theme="dark"] .card,
+    :root[data-theme="dark"] .card p,
+    :root[data-theme="dark"] .card li,
+    :root[data-theme="dark"] .card label,
+    :root[data-theme="dark"] .card strong,
+    :root[data-theme="dark"] .card span,
+    :root[data-theme="dark"] .card div {
+      color: #fff2f7;
+    }
+    :root[data-theme="light"] .card,
+    :root[data-theme="light"] .card p,
+    :root[data-theme="light"] .card li,
+    :root[data-theme="light"] .card label,
+    :root[data-theme="light"] .card strong,
+    :root[data-theme="light"] .card span,
+    :root[data-theme="light"] .card div {
+      color: #482238;
+    }
+    img { opacity: 1 !important; }
+
+
+
+    /* =========================================================
+       FINAL DESIGN SYSTEM — polished typography + reliable contrast
+       These rules intentionally override earlier experimental styles.
+       ========================================================= */
+    :root {
+      --bg1: #fff3f8;
+      --bg2: #fce0ec;
+      --card: #fffafd;
+      --card-sub: #fff0f6;
+      --ink: #3e2032;
+      --ink-soft: #684257;
+      --line: #bd6489;
+      --pink: #f28db5;
+      --sun: #ffe2a0;
+      --mint: #c8efd9;
+      --sky: #c8e8fb;
+      --lil: #e3d1fb;
+      --peach: #ffd4c3;
+      --shadow: 0 12px 30px rgba(105, 43, 76, .10);
+      --shadow-sm: 0 5px 14px rgba(105, 43, 76, .10);
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "DM Sans", sans-serif !important;
+      font-size: 16px;
+      line-height: 1.65;
+      letter-spacing: .01em;
+      color: var(--ink) !important;
+      background:
+        radial-gradient(circle at 5% 4%, rgba(255,255,255,.95), transparent 25rem),
+        radial-gradient(circle at 95% 22%, rgba(255,190,216,.35), transparent 24rem),
+        linear-gradient(145deg, var(--bg1), var(--bg2)) fixed !important;
+    }
+    body, body p, body li, body label, body small, body span, body div {
+      text-shadow: none !important;
+    }
+    h1, h2, h3 {
+      font-family: "Playfair Display", Georgia, serif !important;
+      font-weight: 800 !important;
+      line-height: 1.2 !important;
+      letter-spacing: -.025em;
+      text-wrap: balance;
+    }
+    h1 { color: #96365f !important; }
+    h2, h3 { color: #a34470 !important; }
+    p, li, .sub-note, .triage-alert, .ward-tile-sub, .env-tap-hint,
+    .coupon-desc, .rx-label, .tiny-progress {
+      font-family: "DM Sans", sans-serif !important;
+      color: var(--ink) !important;
+      font-weight: 500;
+    }
+    .sub-note, .tiny-progress, .ward-tile-sub, .env-tap-hint, .coupon-desc {
+      color: var(--ink-soft) !important;
+    }
+    strong, b { font-weight: 800 !important; }
+    .hero-badge, .ward-tab, .pill, button, .cat-pill, .jar-tag,
+    .xray-badge, .rx-stamp, .hug-counter-pill, .coupon-title {
+      font-family: "Fredoka", "DM Sans", sans-serif !important;
+      font-weight: 600 !important;
+      letter-spacing: .01em;
+    }
+    .card, .rx-paper {
+      border-radius: 26px;
+      box-shadow: var(--shadow);
+    }
+    .card {
+      background: var(--card) !important;
+      color: var(--ink) !important;
+      border: 1px solid rgba(189,100,137,.28) !important;
+      padding: 23px 20px;
+    }
+    .card * { color: inherit; }
+    .sticky-header {
+      background: rgba(255,248,251,.92) !important;
+      border-bottom: 1px solid rgba(189,100,137,.25) !important;
+      box-shadow: 0 5px 18px rgba(90,35,65,.06);
+    }
+    .topbar { background: transparent !important; }
+    .pill, .ward-tab, .cat-pill {
+      background: #fffafd !important;
+      color: #482238 !important;
+      border: 1.5px solid #c8799c !important;
+      box-shadow: 0 3px 0 rgba(189,100,137,.25) !important;
+    }
+    .ward-tab.active, .cat-pill.active {
+      background: #f6a7c5 !important;
+      color: #421d31 !important;
+    }
+    button.btn {
+      border: 1px solid rgba(111,42,76,.24) !important;
+      border-radius: 15px !important;
+      box-shadow: 0 5px 0 rgba(112,48,79,.18) !important;
+      font-size: 16px;
+      padding: 11px 18px;
+    }
+    button.btn:focus-visible, .pill:focus-visible, .ward-tile:focus-visible,
+    .env-card:focus-visible, .reply-btn:focus-visible {
+      outline: 3px solid #8d3b69 !important;
+      outline-offset: 3px;
+    }
+    .ward-tile, .env-card, .coupon-card, .reply-btn {
+      background: var(--card-sub) !important;
+      color: var(--ink) !important;
+      border: 1.5px solid rgba(189,100,137,.48) !important;
+      box-shadow: 0 5px 0 rgba(189,100,137,.16) !important;
+    }
+    .ward-tile-title, .env-title, .coupon-title { color: var(--ink) !important; }
+    .ward-tile-sub, .env-tap-hint, .coupon-desc { color: var(--ink-soft) !important; }
+    .welcome-teaser, .surprise-stage, .triage-alert, .jar-stage {
+      background: linear-gradient(145deg, #fffafd, #ffedf4) !important;
+      color: #482238 !important;
+      border-color: #d58aa9 !important;
+    }
+    .env-letter-box, .jar-note, .rx-paper, .cert-box {
+      background: #fffafd !important;
+      color: #3e2032 !important;
+      border-color: #d58aa9 !important;
+    }
+    .env-letter-box, .jar-note, .hug-status, .cert-box > p {
+      font-family: "Caveat", cursive !important;
+      font-weight: 700 !important;
+      font-size: clamp(1.45rem, 4.5vw, 1.8rem) !important;
+      line-height: 1.38 !important;
+      color: #51243b !important;
+    }
+    .rx-paper { border: 1.5px solid #d58aa9 !important; }
+    .rx-paper h2 { color: #96365f !important; }
+    .rx-paper p, .rx-paper div, .rx-paper span { color: #482238; }
+    .rx-item {
+      background: #fff0f6 !important;
+      color: #3e2032 !important;
+      border: 1.5px solid #b85d83 !important;
+    }
+    .rx-item .rx-label { color: #3e2032 !important; }
+    .rx-item.checked { background: #d8f1e1 !important; color: #173d2a !important; }
+    .cert-box { background: linear-gradient(135deg,#fff2c9,#ffe5f0) !important; }
+    .xray-card {
+      background: #202b49 !important;
+      color: #e5faff !important;
+      border: 1.5px solid #9bcddd !important;
+    }
+    .xray-card * { color: inherit !important; }
+    .xray-card .xray-badge { color: #b9f5ff !important; }
+    .xray-card.scanned {
+      background: #fffafd !important;
+      color: #3e2032 !important;
+      border-color: #c8799c !important;
+    }
+    .xray-card.scanned .xray-badge {
+      background: #d8f1e1 !important;
+      color: #17432d !important;
+      border-color: #8bbda0 !important;
+    }
+    .coupon-card.redeemed { background: #d8f1e1 !important; color: #173d2a !important; }
+    .coupon-card.redeemed * { color: #173d2a !important; }
+    .reply-btn { font-family: "DM Sans", sans-serif !important; font-weight: 700 !important; }
+    .hug-status { background: var(--card-sub) !important; color: var(--ink) !important; }
+    .theme-toggle { min-width: 118px; }
+    .pink-illustration { filter: drop-shadow(0 10px 14px rgba(190,76,124,.16)); }
+
+    /* Night palette: every surface gets a deliberate foreground/background pair. */
+    :root[data-theme="dark"] {
+      color-scheme: dark;
+      --bg1: #17111f;
+      --bg2: #2a192d;
+      --card: #302338;
+      --card-sub: #3b2a43;
+      --ink: #fff3f8;
+      --ink-soft: #ead2df;
+      --line: #d88eae;
+    }
+    :root[data-theme="dark"] body {
+      color: #fff3f8 !important;
+      background:
+        radial-gradient(circle at 8% 5%, rgba(112,54,91,.35), transparent 26rem),
+        radial-gradient(circle at 95% 30%, rgba(73,48,91,.28), transparent 25rem),
+        linear-gradient(145deg,#17111f,#2a192d 70%,#201729) fixed !important;
+    }
+    :root[data-theme="dark"] h1 { color: #ffc5dc !important; }
+    :root[data-theme="dark"] h2, :root[data-theme="dark"] h3 { color: #ffd5e6 !important; }
+    :root[data-theme="dark"] p, :root[data-theme="dark"] li,
+    :root[data-theme="dark"] .sub-note, :root[data-theme="dark"] .tiny-progress,
+    :root[data-theme="dark"] .triage-alert { color: #f7e8ef !important; }
+    :root[data-theme="dark"] .sticky-header {
+      background: rgba(28,18,34,.94) !important;
+      border-color: rgba(216,142,174,.25) !important;
+    }
+    :root[data-theme="dark"] .card,
+    :root[data-theme="dark"] .ward-tile,
+    :root[data-theme="dark"] .env-card,
+    :root[data-theme="dark"] .coupon-card,
+    :root[data-theme="dark"] .reply-btn,
+    :root[data-theme="dark"] .hug-status {
+      background: #302338 !important;
+      color: #fff3f8 !important;
+      border-color: #bd7899 !important;
+    }
+    :root[data-theme="dark"] .card * { color: inherit; }
+    :root[data-theme="dark"] .ward-tile-title,
+    :root[data-theme="dark"] .env-title,
+    :root[data-theme="dark"] .coupon-title,
+    :root[data-theme="dark"] .reply-btn { color: #fff3f8 !important; }
+    :root[data-theme="dark"] .ward-tile-sub,
+    :root[data-theme="dark"] .env-tap-hint,
+    :root[data-theme="dark"] .coupon-desc { color: #ead2df !important; }
+    :root[data-theme="dark"] .pill,
+    :root[data-theme="dark"] .ward-tab,
+    :root[data-theme="dark"] .cat-pill {
+      background: #49334b !important;
+      color: #fff3f8 !important;
+      border-color: #d88eae !important;
+    }
+    :root[data-theme="dark"] .ward-tab.active,
+    :root[data-theme="dark"] .cat-pill.active {
+      background: #9d5478 !important;
+      color: #fff7fb !important;
+    }
+    :root[data-theme="dark"] .welcome-teaser,
+    :root[data-theme="dark"] .surprise-stage,
+    :root[data-theme="dark"] .jar-stage,
+    :root[data-theme="dark"] .triage-alert {
+      background: #3b2a43 !important;
+      color: #fff3f8 !important;
+      border-color: #bd7899 !important;
+    }
+    /* Paper-style elements deliberately remain light in night mode for legibility. */
+    :root[data-theme="dark"] .env-letter-box,
+    :root[data-theme="dark"] .jar-note,
+    :root[data-theme="dark"] .rx-paper,
+    :root[data-theme="dark"] .cert-box {
+      background: #fff7fb !important;
+      color: #3e2032 !important;
+      border-color: #d58aa9 !important;
+    }
+    :root[data-theme="dark"] .env-letter-box *,
+    :root[data-theme="dark"] .jar-note *,
+    :root[data-theme="dark"] .rx-paper *,
+    :root[data-theme="dark"] .cert-box * { color: #3e2032 !important; }
+    :root[data-theme="dark"] .env-letter-box,
+    :root[data-theme="dark"] .jar-note,
+    :root[data-theme="dark"] .cert-box > p {
+      font-family: "Caveat", cursive !important;
+      font-weight: 700 !important;
+    }
+    :root[data-theme="dark"] .rx-item {
+      background: #49334b !important;
+      color: #fff3f8 !important;
+      border-color: #d88eae !important;
+    }
+    :root[data-theme="dark"] .rx-item .rx-label { color: #fff3f8 !important; }
+    :root[data-theme="dark"] .rx-item.checked { background: #28513e !important; }
+    :root[data-theme="dark"] .rx-item.checked .rx-label { color: #f1fff5 !important; }
+    :root[data-theme="dark"] .rx-box {
+      background: #fffafd !important;
+      color: #3e2032 !important;
+      border-color: #d88eae !important;
+    }
+    :root[data-theme="dark"] .xray-card { background: #202b49 !important; color: #e5faff !important; }
+    :root[data-theme="dark"] .xray-card.scanned { background: #302338 !important; color: #fff3f8 !important; }
+    :root[data-theme="dark"] .xray-card.scanned * { color: #fff3f8 !important; }
+    :root[data-theme="dark"] .coupon-card.redeemed { background: #28513e !important; color: #f1fff5 !important; }
+    :root[data-theme="dark"] .coupon-card.redeemed * { color: #f1fff5 !important; }
+    :root[data-theme="dark"] .hug-status { color: #fff3f8 !important; }
+    :root[data-theme="dark"] .hug-status * { color: #fff3f8 !important; }
+    :root[data-theme="dark"] .toast { background: #ffe2a0 !important; color: #3e2032 !important; }
+
+    @media (max-width: 420px) {
+      main { padding-left: 12px; padding-right: 12px; }
+      .card { padding: 19px 15px; }
+      .topbar { padding-left: 11px; padding-right: 11px; }
+      .topbar .pill { font-size: 12px; padding: 6px 9px; }
+      .theme-toggle { min-width: 98px; }
+      button.btn { max-width: 100%; white-space: normal; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+
+
+
+    /* Final readability pass: keep diagnostic cards inside their grid and make
+       message text use the requested handwritten style from reference image 2. */
+    .xray-grid, .xray-card { min-width: 0 !important; width: 100%; box-sizing: border-box !important; }
+    .xray-card { overflow: hidden; padding: 18px 16px !important; }
+    .xray-card > * { box-sizing: border-box; max-width: 100%; }
+    .xray-card > div:last-child {
+      width: 100%; min-width: 0;
+      white-space: normal !important;
+      overflow-wrap: anywhere !important;
+      word-break: normal !important;
+      text-align: center;
+      font-family: "Caveat", cursive !important;
+      font-size: clamp(1.35rem, 4.2vw, 1.75rem) !important;
+      font-weight: 700 !important;
+      line-height: 1.22 !important;
+      letter-spacing: .01em;
+    }
+    .xray-card > div:nth-of-type(1) {
+      width: 100%; min-width: 0;
+      white-space: normal !important;
+      overflow-wrap: anywhere !important;
+      font-family: "Fredoka", "DM Sans", sans-serif !important;
+      line-height: 1.3 !important;
+    }
+    /* Handwritten font is reserved for actual message/letter content, not UI labels. */
+    .surprise-stage, .hug-status, #finalLetter,
+    .env-letter-box, .jar-note, .cert-box > p,
+    #complimentDisplay, #missionDisplay, #hugStatus {
+      font-family: "Caveat", cursive !important;
+      font-weight: 700 !important;
+      font-size: clamp(1.45rem, 4.6vw, 1.9rem) !important;
+      line-height: 1.28 !important;
+      letter-spacing: .01em;
+      overflow-wrap: anywhere;
+      word-break: normal;
+    }
+    .surprise-stage, #finalLetter { color: #51243b !important; }
+    :root[data-theme="dark"] .surprise-stage,
+    :root[data-theme="dark"] #finalLetter,
+    :root[data-theme="dark"] #complimentDisplay,
+    :root[data-theme="dark"] #missionDisplay {
+      color: #51243b !important;
+    }
+    @media (max-width: 420px) {
+      .xray-card { padding: 16px 12px !important; }
+      .xray-card > div:last-child { font-size: 1.38rem !important; }
+    }
+
+  </style>
+  <style>
+    :root { color-scheme: light !important; }
+    html, body { color-scheme: light !important; }
+
+    /* FINAL X-RAY CONTRAST FIX: never use pale text on pastel badges. */
+    .xray-card,
+    .xray-card.scanned {
+      background: #fff0f6 !important;
+      color: #35182b !important;
+      border: 2px solid #c96f98 !important;
+      box-shadow: 3px 3px 0 #e7a9c3 !important;
+    }
+    .xray-card,
+    .xray-card * {
+      color: #35182b !important;
+      opacity: 1 !important;
+      text-shadow: none !important;
+    }
+    .xray-card .xray-badge,
+    .xray-card.scanned .xray-badge {
+      display: inline-block !important;
+      background: #ccebd8 !important;
+      color: #17452d !important;
+      border: 2px solid #55966f !important;
+      font-weight: 800 !important;
+      text-shadow: none !important;
+    }
+    .xray-card > div:first-of-type {
+      color: #35182b !important;
+      font-weight: 800 !important;
+    }
+    .xray-card > div:last-child {
+      color: #35182b !important;
+      font-weight: 700 !important;
+      line-height: 1.45 !important;
+      overflow-wrap: anywhere !important;
+    }
+  </style>
+  <style id="final-message-contrast-fix">
+    /* Keep every message panel readable in the pink-only theme, regardless of saved theme settings. */
+    html, body { color-scheme: light !important; }
+    .surprise-stage,
+    #complimentDisplay,
+    #missionDisplay,
+    #finalLetter,
+    #hugStatus,
+    .hug-status,
+    .env-letter-box,
+    .jar-note,
+    .cert-box > p {
+      background: #fff4f8 !important;
+      color: #351629 !important;
+      border-color: #d77fa5 !important;
+      text-shadow: none !important;
+      opacity: 1 !important;
+      -webkit-text-fill-color: #351629 !important;
+      font-family: "Caveat", cursive !important;
+      font-weight: 700 !important;
+      line-height: 1.38 !important;
+      overflow-wrap: anywhere !important;
+      word-break: normal !important;
+    }
+    #complimentDisplay {
+      min-height: 150px !important;
+      padding: 24px 22px !important;
+      border: 2px dashed #c76d96 !important;
+      border-radius: 24px !important;
+      box-shadow: 0 5px 16px rgba(117, 47, 80, .10) !important;
+      font-size: clamp(1.55rem, 4.8vw, 2rem) !important;
+      text-align: center !important;
+    }
+    #complimentDisplay * {
+      color: #351629 !important;
+      -webkit-text-fill-color: #351629 !important;
+      text-shadow: none !important;
+      opacity: 1 !important;
+    }
+    .sub-note { color: #54243d !important; }
+  </style>
+
+  <style id="final-cohesive-light-theme-v5">
+    :root, html, body { color-scheme: light !important; }
+    body {
+      background: linear-gradient(145deg, #fff8fb 0%, #ffeaf2 48%, #fff3f7 100%) !important;
+      color: #432238 !important;
+    }
+    .sticky-header, .topbar {
+      background: rgba(255,248,251,.97) !important;
+      color: #432238 !important;
+      border-color: #e5a1bd !important;
+    }
+    .page-view, .ward-tile, .card, .panel, .section-card {
+      color: #432238;
+    }
+    .xray-grid { gap: 16px !important; }
+    html body #xrayGrid .xray-card,
+    html body #xrayGrid .xray-card.scanned {
+      background: linear-gradient(145deg, #fffafd 0%, #ffeaf2 100%) !important;
+      color: #3b1d30 !important;
+      border: 2px solid #d77fa5 !important;
+      border-radius: 24px !important;
+      box-shadow: 0 5px 0 #efbfd1, 0 10px 22px rgba(115,48,78,.10) !important;
+      min-height: 190px !important;
+      padding: 20px 16px !important;
+    }
+    html body #xrayGrid .xray-card *,
+    html body #xrayGrid .xray-card.scanned * {
+      color: #3b1d30 !important;
+      -webkit-text-fill-color: #3b1d30 !important;
+      opacity: 1 !important;
+      text-shadow: none !important;
+    }
+    html body #xrayGrid .xray-card .xray-badge {
+      background: #dff4e7 !important;
+      color: #174b31 !important;
+      -webkit-text-fill-color: #174b31 !important;
+      border: 2px solid #78b995 !important;
+      font: 800 13px "Fredoka", "DM Sans", sans-serif !important;
+      padding: 5px 12px !important;
+      margin-bottom: 12px !important;
+    }
+    html body #xrayGrid .xray-card > div:first-of-type {
+      color: #6f294b !important;
+      -webkit-text-fill-color: #6f294b !important;
+      font: 800 16px "DM Sans", sans-serif !important;
+      line-height: 1.4 !important;
+      margin-bottom: 8px !important;
+    }
+    html body #xrayGrid .xray-card > div:last-child {
+      color: #432238 !important;
+      -webkit-text-fill-color: #432238 !important;
+      font: 700 clamp(1.12rem, 3.5vw, 1.5rem)/1.4 "Caveat", cursive !important;
+      overflow-wrap: anywhere !important;
+      word-break: normal !important;
+    }
+    #complimentDisplay {
+      background: linear-gradient(145deg, #fffafd, #ffedf4) !important;
+      color: #432238 !important;
+      border: 2px dashed #d77fa5 !important;
+    }
+    .xray-card:focus-visible, button:focus-visible {
+      outline: 3px solid #9b4d72 !important;
+      outline-offset: 3px !important;
+    }
+    @media (max-width: 480px) {
+      html body #xrayGrid .xray-card,
+      html body #xrayGrid .xray-card.scanned { min-height: 175px !important; padding: 16px 12px !important; }
+    }
+  </style>
+
+</head>
+<body>
+
+  <!-- Sticky Top Utility & Clinic Ward Switcher -->
+  <div class="sticky-header">
+    <header class="topbar">
+      <button type="button" class="pill" id="homePill">🩺 Dr. Karan’s Clinic</button>
+      <div class="top-actions">
+        <button type="button" class="pill" id="sndBtn" aria-label="Toggle soft love melody">🔊</button>
+      </div>
+    </header>
+    <nav class="ward-nav" id="wardNav" aria-label="Clinic Wards"></nav>
+  </div>
+
+  <main>
+    <!-- =========================================================
+         PAGE 1: #home (EMERGENCY WAITING ROOM & TRIAGE NOTICE)
+         ========================================================= -->
+    <section class="page-view active" id="page-home">
+      <div class="card c">
+        <svg class="pink-illustration" viewBox="0 0 320 190" role="img" aria-label="Cute pink cartoon kitten holding a heart">
+          <defs><linearGradient id="kittyPink" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#ffc5dc"/><stop offset="1" stop-color="#ff8fb9"/></linearGradient></defs>
+          <ellipse cx="160" cy="166" rx="104" ry="13" fill="#efb4cb" opacity=".35"/>
+          <path d="M91 77 L82 24 Q81 15 91 22 L125 48 Q160 32 195 48 L229 22 Q239 15 238 26 L229 79 Q248 103 239 132 Q228 166 160 166 Q92 166 81 132 Q72 103 91 77Z" fill="url(#kittyPink)" stroke="#b95780" stroke-width="5" stroke-linejoin="round"/>
+          <path d="M100 70 L94 37 L119 57 M220 70 L226 37 L201 57" fill="#ffe8f1" stroke="#b95780" stroke-width="4" stroke-linejoin="round"/>
+          <ellipse cx="132" cy="94" rx="7" ry="10" fill="#713b58"/><ellipse cx="188" cy="94" rx="7" ry="10" fill="#713b58"/>
+          <path d="M153 109 Q160 116 167 109 Q160 122 153 109Z" fill="#b95780"/><path d="M160 121 Q147 135 137 122 M160 121 Q173 135 183 122" fill="none" stroke="#713b58" stroke-width="3" stroke-linecap="round"/>
+          <path d="M110 110 L77 104 M110 120 L75 123 M210 110 L243 104 M210 120 L245 123" stroke="#b95780" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M160 135 C142 119 126 137 160 158 C194 137 178 119 160 135Z" fill="#fff4f8" stroke="#c75d8a" stroke-width="3"/>
+          <path d="M53 62 C44 50 26 58 53 82 C80 58 62 50 53 62Z" fill="#ff8fb9"/><path d="M270 52 C261 40 243 48 270 72 C297 48 279 40 270 52Z" fill="#ff8fb9"/>
+          <path d="M155 12 l5 11 11 5 -11 5 -5 11 -5 -11 -11 -5 11 -5Z" fill="#f6b8d2"/>
+        </svg>
+        <div class="hero-emoji">🩺</div>
+        <div><span class="hero-badge">🚨 CODE CUTE • PRIORITY VIP PATIENT</span></div>
+        <h1>Dr. Karan’s Emergency Clinic for Suhani 🩺</h1>
+        <p style="font-size: 16.5px; margin: 6px 0 8px;">
+          Operated by Chief of Medicine <strong>Dr. Karan, M.D.</strong><br>
+          <span style="font-size: 14px; color: var(--ink-soft);">(M.D. = <em>Massively Dramatic</em> &amp; 100% Unlicensed Best Friend)</span>
+        </p>
+
+        <div class="triage-alert">
+          <strong>📋 URGENT TRIAGE REPORT FOR PATIENT SUHANI:</strong><br>
+          Vital scans indicate <em>Acute Heroine Exhaustion</em>, <em>Severe Hydration Neglect</em>, and an alarming deficiency of <em>Guilt-Free Naps</em>. A special little care plan has been prepared. The rooms are secret for now, and each one opens only when you reach it. 🚑💗
+        </div>
+      </div>
+
+      <div class="card c">
+        <h2>🔐 Your Little Surprise Journey</h2>
+        <div class="welcome-teaser">
+          <span class="surprise-icon">🎁</span>
+          <strong>A tiny pink world of surprises, made just for a smile. 💗</strong>
+          <p class="sub-note" style="margin:7px 0 0;">The surprises are tucked away behind secret doors. Nothing is revealed here—just tap the button when you are ready, then explore one room at a time. 🌷</p>
+        </div>
+        <div class="row" style="margin-top: 16px; margin-bottom: 0;">
+          <button type="button" class="btn pink" id="startRoundsBtn">🩺 Begin the Surprise Journey →</button>
+        </div>
+        <p class="tiny-progress">A tiny reminder: you deserve kindness on ordinary days too. 🌷</p>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         PAGE 2: #envelopes (CLASSIFIED MEDICAL CASE FILES)
+         ========================================================= -->
+    <section class="page-view" id="page-envelopes">
+      <div class="card">
+        <h2>📁 Classified Medical Case Files</h2>
+        <p class="sub-note">
+          Break the wax seal on any “Open When…” patient chart when symptoms flare up!
+        </p>
+        <div class="env-grid" id="envGrid"></div>
+      </div>
+      <div class="ward-pager" id="pager-envelopes"></div>
+    </section>
+
+    <!-- =========================================================
+         PAGE 3: #jar (THE PHARMACY PILL & MEME JAR)
+         ========================================================= -->
+    <section class="page-view" id="page-jar">
+      <div class="card c">
+        <h2>💊 Pharmacy Pill &amp; Meme Jar</h2>
+        <p class="sub-note">Select a medicine flavor and shake the apothecary jar for an instant dose!</p>
+
+        <div class="filter-pills" id="jarFilters">
+          <button type="button" class="cat-pill active" data-cat="all">✨ All Remedies</button>
+          <button type="button" class="cat-pill" data-cat="diagnosis">🩺 Dramatic Diagnosis</button>
+          <button type="button" class="cat-pill" data-cat="syrup">🍯 Sweet Syrup</button>
+          <button type="button" class="cat-pill" data-cat="tonic">😂 Funny Tonic</button>
+        </div>
+
+        <div class="jar-stage">
+          <div class="jar-emoji" id="jarIcon" role="button" tabindex="0" aria-label="Dispense a remedy">🫙</div>
+          <div class="jar-note" id="jarNoteBox">
+            <span class="jar-tag" id="jarTag">💊 Chief Doctor’s Orders</span>
+            <div id="jarText">“Tap the jar or button below to dispense a fresh dose of dramatic medical advice &amp; best-friend care!”</div>
+          </div>
+          <div class="row" style="margin-bottom: 0;">
+            <button type="button" class="btn pink" id="drawJarBtn">💊 Dispense Next Dose</button>
+            <button type="button" class="btn sm sky" id="copyJarBtn">📋 Copy Prescription</button>
+          </div>
+        </div>
+      </div>
+      <div class="ward-pager" id="pager-jar"></div>
+    </section>
+
+    <!-- =========================================================
+         PAGE 4: #prescription (OFFICIAL HOSPITAL PRESCRIPTION PAD)
+         ========================================================= -->
+    <section class="page-view" id="page-prescription">
+      <div class="rx-paper">
+        <div class="rx-top">
+          <div>
+            <h2 style="text-align:left; margin:0; font-size:1.45rem;">📝 Official Hospital Prescription</h2>
+            <div style="font-size:13.5px; color:#6e5082;">Patient: Suhani • Attending: Dr. Karan, M.D.</div>
+          </div>
+          <span class="rx-stamp">STRICTLY MANDATORY</span>
+        </div>
+        <p style="font-size:14.5px; color:#573b69; margin: 0 0 10px;">
+          Check off each clinical dosage as you administer it to yourself today:
+        </p>
+        <div id="rxChecklist"></div>
+        <div id="rxProgress" style="text-align:center; font:800 15px 'Baloo 2',sans-serif; color:#4a2f5a; margin-top:10px;"></div>
+
+        <div class="cert-box">
+          <div style="font:800 14px 'Baloo 2',sans-serif; letter-spacing:0.5px;">🏅 OFFICIAL CERTIFICATE OF RECOVERY 🏅</div>
+          <p style="font:600 1.42rem/1.3 'Caveat',cursive; margin:8px 0;">
+            “This certifies that Patient Suhani is officially cleared of all adulting duties and is legally entitled to extra snacks, warm chai, and unlimited dramatic pampering.”
+          </p>
+          <div style="font:800 13.5px 'Baloo 2',sans-serif;">Signed: <em>Dr. Karan (Chief of Dramatic Medicine) 🩺💛</em></div>
+        </div>
+      </div>
+      <div class="ward-pager" id="pager-prescription"></div>
+    </section>
+
+    <!-- =========================================================
+         PAGE 5: #reasons (PATIENT VITALS & X-RAY SCAN)
+         ========================================================= -->
+    <section class="page-view" id="page-reasons">
+      <div class="card">
+        <h2>🩻 Patient Vitals &amp; X-Ray Scan</h2>
+        <p class="sub-note">Tap each dark X-ray plate to inspect Dr. Karan’s shocking diagnostic findings!</p>
+        <div class="xray-grid" id="xrayGrid"></div>
+      </div>
+      <div class="ward-pager" id="pager-reasons"></div>
+    </section>
+
+    <!-- =========================================================
+         PAGE 6: #coupons (VIP HOSPITAL VOUCHERS & MEDICAL PASSES)
+         ========================================================= -->
+    <section class="page-view" id="page-coupons">
+      <div class="card">
+        <h2>🎟️ VIP Hospital Vouchers</h2>
+        <p class="sub-note">Redeem any pass below—Dr. Karan is legally bound by the Bestie Hippocratic Oath to honor them!</p>
+        <div class="coupon-grid" id="couponGrid"></div>
+      </div>
+      <div class="ward-pager" id="pager-coupons"></div>
+    </section>
+
+    <!-- =========================================================
+         PAGE 7: #hugs (INTENSIVE HUG UNIT / IHU)
+         ========================================================= -->
+    <section class="page-view" id="page-hugs">
+      <div class="card c">
+        <h2>🤗 Intensive Hug Unit (IHU)</h2>
+        <p class="sub-note">CLEAR!! Smash the Teddy Bear Defibrillator below to shock your mood with 10,000 volts of bestie warmth!</p>
+
+        <div class="hug-counter-pill" id="hugCounter">⚡ Hug Shocks Administered: 0</div>
+        <div>
+          <button type="button" class="hug-orb" id="hugBtn" aria-label="Administer Bear Hug Shock">🧸</button>
+        </div>
+        <div class="hug-status" id="hugStatus">
+          “Defibrillator charged to 100% coziness! Tap the teddy bear to administer emergency squeeze.”
+        </div>
+
+        <h3 style="margin-top: 16px;">📟 Page Dr. Karan Back (One-Tap Copy)</h3>
+        <p class="sub-note" style="margin-bottom: 8px;">Tap any patient status update to copy and send straight to Karan:</p>
+        <div class="reply-grid" id="replyGrid"></div>
+      </div>
+      <div class="ward-pager" id="pager-hugs"></div>
+    </section>
+
+    <!-- PAGE 8: COMPLIMENT POST OFFICE -->
+    <section class="page-view" id="page-compliments">
+      <div class="card c">
+        <h2>💌 The Compliment Post Office</h2>
+        <p class="sub-note">A tiny parcel of appreciation, delivered one note at a time. No charge—kindness is free!</p>
+        <div class="surprise-stage" id="complimentDisplay"><span><span class="surprise-icon">📮</span>Your first little note is waiting inside the mailbox.</span></div>
+        <div class="row"><button type="button" class="btn pink" id="openCompliment">💌 Deliver My Note</button></div>
+      </div>
+      <div class="ward-pager" id="pager-compliments"></div>
+    </section>
+
+    <!-- PAGE 9: TINY HAPPY MISSIONS -->
+    <section class="page-view" id="page-missions">
+      <div class="card c">
+        <h2>🐣 Tiny Happy Mission Control</h2>
+        <p class="sub-note">Choose a very small, very doable mission. No pressure, no productivity contest—just a little moment for yourself.</p>
+        <div class="surprise-stage" id="missionDisplay"><span><span class="surprise-icon">🧭</span>Commander Suhani, your mission card is face down!</span></div>
+        <div class="row"><button type="button" class="btn lil" id="drawMission">🎲 Pick a Tiny Mission</button></div>
+        <p class="tiny-progress">You can skip any mission. Resting is also a perfectly valid mission. 💛</p>
+      </div>
+      <div class="ward-pager" id="pager-missions"></div>
+    </section>
+
+    <!-- PAGE 10: SECRET FINAL LETTER -->
+    <section class="page-view" id="page-finalnote">
+      <div class="card c">
+        <h2>🌷 The Secret Last Page</h2>
+        <p class="sub-note">You made it to the final room. Tap the sealed envelope when you are ready.</p>
+        <button type="button" class="secret-seal" id="finalSeal" aria-label="Open the final letter">💌</button>
+        <div class="surprise-stage" id="finalLetter" aria-live="polite">A little note is sealed inside. No rush—open it whenever you like.</div>
+        <p class="tiny-progress">End of the clinic tour • unlimited kindness beyond this page ✨</p>
+      </div>
+      <div class="ward-pager" id="pager-finalnote"></div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    (function () {
+      const $ = (sel) => document.querySelector(sel);
+      const prefersReducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const pastelColors = ["#ff7aa8", "#ffd23f", "#a9dcff", "#b7ecc6", "#d9c2ff", "#ffbe98"];
+
+      function pickRandom(arr) {
+        return arr[Math.floor(Math.random() * arr.length)];
+      }
+
+      /* =========================================================
+         1. CLINIC WARDS & HASH ROUTING ARCHITECTURE
+         ========================================================= */
+      const wards = [
+        { id: "home", short: "🏥 Welcome", title: "Emergency Waiting Room", icon: "🩺", desc: "A private little welcome" },
+        { id: "envelopes", short: "📁 Case Files", title: "Classified Case Files", icon: "📁", desc: "Open-when letters and caring notes" },
+        { id: "jar", short: "💊 Pill Jar", title: "Pharmacy Pill & Meme Jar", icon: "🫙", desc: "Funny doses and sweet reminders" },
+        { id: "prescription", short: "📝 Rx Pad", title: "Official Prescription Pad", icon: "📝", desc: "A checklist for gentle self-care" },
+        { id: "reasons", short: "🩻 X-Ray", title: "Patient Vitals & X-Ray", icon: "🩻", desc: "A scan full of lovely discoveries" },
+        { id: "coupons", short: "🎟️ Vouchers", title: "VIP Hospital Vouchers", icon: "🎟️", desc: "Little friendship coupons" },
+        { id: "hugs", short: "🤗 Hug ICU", title: "Intensive Hug Unit", icon: "🧸", desc: "A teddy-powered mood boost" },
+        { id: "compliments", short: "💌 Post Office", title: "Compliment Post Office", icon: "📮", desc: "A new appreciation note each time" },
+        { id: "missions", short: "🐣 Missions", title: "Tiny Happy Mission Control", icon: "🧭", desc: "Small, cheerful optional missions" },
+        { id: "finalnote", short: "🌷 Final Note", title: "The Secret Last Page", icon: "💌", desc: "A final note, opened only at the end" }
+      ];
+
+      function buildNavAndDirectory() {
+        const nav = $("#wardNav");
+        const dir = $("#wardDirectory");
+        nav.innerHTML = "";
+        if (dir) dir.innerHTML = "";
+
+        wards.forEach((w, idx) => {
+          // Page names are intentionally not displayed in a top menu or directory.
+          // Visitors discover each room only through the previous/next controls.
+
+          // Home directory tiles (skip home itself)
+          if (w.id !== "home" && dir) {
+            const tile = document.createElement("div");
+            tile.className = "ward-tile";
+            tile.innerHTML = `
+              <span class="ward-tile-ico">${w.icon}</span>
+              <div>
+                <span class="ward-tile-title">Ward ${idx}: ${w.title}</span>
+                <span class="ward-tile-sub">${w.desc}</span>
+              </div>
+            `;
+            tile.onclick = () => navigateTo(w.id);
+            dir.appendChild(tile);
+          }
+
+          // Bottom Back / Next Ward pagers for pages 2..7
+          if (w.id !== "home") {
+            const pager = $(`#pager-${w.id}`);
+            if (pager) {
+              const prev = wards[idx - 1];
+              const next = wards[idx + 1] || wards[0];
+              pager.innerHTML = `
+                <button type="button" class="btn sm lil">← ${prev.short}</button>
+                <button type="button" class="btn sm sky">${next.id === "home" ? "🏥 Back to Triage" : next.short + " →"}</button>
+              `;
+              const btns = pager.querySelectorAll("button");
+              btns[0].onclick = () => navigateTo(prev.id);
+              btns[1].onclick = () => navigateTo(next.id);
+            }
+          }
+        });
+      }
+
+      function navigateTo(wardId) {
+        playChime([523.25, 659.25]);
+        location.hash = wardId;
+      }
+
+      function syncRoute() {
+        const raw = (location.hash || "#home").replace("#", "").trim();
+        const valid = wards.some((w) => w.id === raw) ? raw : "home";
+        document.body.classList.toggle("at-home", valid === "home");
+
+        document.querySelectorAll(".page-view").forEach((sec) => {
+          sec.classList.toggle("active", sec.id === `page-${valid}`);
+        });
+
+        document.querySelectorAll(".ward-tab").forEach((tab) => {
+          const isAct = tab.dataset.ward === valid;
+          tab.classList.toggle("active", isAct);
+          if (isAct && tab.scrollIntoView) {
+            tab.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+          }
+        });
+
+        window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
+      }
+
+      $("#homePill").onclick = () => navigateTo("home");
+      $("#startRoundsBtn").onclick = () => navigateTo("envelopes");
+      window.addEventListener("hashchange", syncRoute);
+
+      /* Typewriter: notes arrive one character at a time, like a little letter being written */
+      let typingTimer = null;
+      function typeText(element, text, speed = 27) {
+        if (!element) return;
+        clearTimeout(typingTimer);
+        element.textContent = "";
+        if (prefersReducedMotion) { element.textContent = text; return; }
+        element.classList.add("typing-text");
+        let i = 0;
+        const step = () => {
+          if (!element.isConnected) return;
+          element.textContent = text.slice(0, i);
+          i++;
+          if (i <= text.length) typingTimer = setTimeout(step, speed);
+          else element.classList.remove("typing-text");
+        };
+        step();
+      }
+
+      function heartPop(target) {
+        if (prefersReducedMotion) return;
+        const r = target.getBoundingClientRect();
+        const h = document.createElement("span");
+        h.className = "heart-pop";
+        h.textContent = pickRandom(["💗", "💕", "💖", "✨", "🌷"]);
+        h.style.left = Math.min(window.innerWidth - 30, Math.max(8, r.left + r.width / 2)) + "px";
+        h.style.top = Math.max(8, r.top + r.height / 2) + "px";
+        document.body.appendChild(h);
+        setTimeout(() => h.remove(), 1400);
+      }
+
+      /* =========================================================
+         2. GENTLE CHIME AUDIO & TOAST NOTIFICATIONS
+         ========================================================= */
+      let soundOn = true;
+      try {
+        if (localStorage.getItem("dr_karan_snd") === "0") soundOn = false;
+      } catch (e) {}
+
+      let audioCtx = null;
+      function playChime(notes = [523.25, 659.25]) {
+        if (!soundOn) return;
+        try {
+          if (!audioCtx) {
+            const AC = window.AudioContext || window.webkitAudioContext;
+            if (AC) audioCtx = new AC();
+          }
+          if (!audioCtx) return;
+          if (audioCtx.state === "suspended") audioCtx.resume().catch(() => {});
+          // Original gentle love-note arpeggio: soft sine tones, not a copied song.
+          const melody = notes.length > 2 ? notes : [523.25, 659.25, 783.99, 659.25, 587.33];
+          melody.forEach((freq, idx) => {
+            const now = audioCtx.currentTime + idx * 0.19;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = "sine";
+            osc.frequency.setValueAtTime(freq, now);
+            gain.gain.setValueAtTime(0.0001, now);
+            gain.gain.exponentialRampToValueAtTime(0.045, now + 0.07);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.52);
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            osc.start(now); osc.stop(now + 0.55);
+          });
+        } catch (e) {}
+      }
+
+      function updateSoundBtn() {
+        $("#sndBtn").textContent = soundOn ? "🔊" : "🔇";
+      }
+      $("#sndBtn").onclick = () => {
+        soundOn = !soundOn;
+        try { localStorage.setItem("dr_karan_snd", soundOn ? "1" : "0"); } catch (e) {}
+        updateSoundBtn();
+        if (soundOn) playChime([587.33, 783.99]);
+        showToast(soundOn ? "Clinic pager chimes ON 🔊" : "Clinic muted 🔇");
+      };
+      updateSoundBtn();
+
+      let toastTimer = null;
+      function showToast(msg) {
+        const el = $("#toast");
+        el.textContent = msg;
+        el.classList.add("show");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => el.classList.remove("show"), 2500);
+      }
+
+      function copyToClipboard(text, successMsg) {
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.select();
+        try {
+          document.execCommand("copy");
+          showToast(successMsg);
+        } catch (e) {
+          showToast("Screenshot this & send to Dr. Karan 🩺💛");
+        }
+        ta.remove();
+      }
+
+      /* =========================================================
+         3. FIXED PINK LIGHT THEME (DARK MODE REMOVED)
+         ========================================================= */
+      document.documentElement.setAttribute("data-theme", "light");
+      try { localStorage.setItem("dr_karan_theme", "light"); } catch (e) {}
+
+      /* =========================================================
+         4. FLOATING HEARTS & CELEBRATION CONFETTI
+         ========================================================= */
+      function floatHearts(confettiCount = 24, heartCount = 6) {
+        if (prefersReducedMotion) return;
+        for (let i = 0; i < confettiCount; i++) {
+          const cf = document.createElement("span");
+          cf.className = "fx cf";
+          cf.style.left = Math.random() * 100 + "vw";
+          cf.style.background = pickRandom(pastelColors);
+          cf.style.animationDuration = (2.1 + Math.random() * 1.7) + "s";
+          document.body.appendChild(cf);
+          setTimeout(() => cf.remove(), 4000);
+        }
+        for (let j = 0; j < heartCount; j++) {
+          const bl = document.createElement("span");
+          bl.className = "fx bl";
+          bl.textContent = pickRandom(["💛", "💖", "🩺", "🧸", "✨", "🍵", "💊"]);
+          bl.style.left = (6 + Math.random() * 86) + "vw";
+          bl.style.animationDuration = (3.4 + Math.random() * 2.2) + "s";
+          document.body.appendChild(bl);
+          setTimeout(() => bl.remove(), 6000);
+        }
+      }
+
+      /* =========================================================
+         5. PAGE 2: CLASSIFIED MEDICAL CASE FILES (6 ENVELOPES)
+         ========================================================= */
+      const envelopes = [
+        {
+          id: "case1",
+          icon: "😴",
+          title: "Case File #01: Acute Exhaustion Syndrome",
+          letter:
+            "CONFIDENTIAL PATIENT CHART — SUHANI:\n\n" +
+            "Alert! My medical sensors show your battery is running on 2% and pure stubbornness. Trying to be a superhero 24/7 is strictly against hospital regulations!\n\n" +
+            "Doctor’s immediate order: Put the phone on silent, roll yourself into a blanket burrito, and take a guilt-free nap. The world will still be there after you rest.\n\n" +
+            "Paging the sandman for you,\nDr. Karan, M.D. 🩺💛"
+        },
+        {
+          id: "case2",
+          icon: "😂",
+          title: "Case File #02: Dangerous Smile Deficiency",
+          letter:
+            "EMERGENCY LAB RESULTS 🚨:\n\n" +
+            "We ran a full scan and discovered a critical shortage of Suhani smiles in the area! Side effects include frowning at screens and forgetting how funny your best friend is.\n\n" +
+            "Reminder: You are stuck with me for life—no refunds, zero exchanges, and unlimited terrible doctor jokes included free of charge.\n\n" +
+            "Show those teeth right now! 😄✨\n\nAdditional finding: your smile has been classified as a rare renewable energy source. One smile can power this clinic for approximately 3 business days.\nDr. Karan"
+        },
+        {
+          id: "case3",
+          icon: "🏡",
+          title: "Case File #03: Sudden Homesickness Flare-Up",
+          letter:
+            "PATIENT CARE MEMO:\n\n" +
+            "Moving to a new city and starting a fresh chapter is huge, and it’s 100% normal when quiet evenings make you miss familiar faces and home food.\n\n" +
+            "Medically speaking, ‘home’ isn’t just a pin on Google Maps—it’s the people who care about you no matter the distance. Call or text me anytime, day or night. I’m always on call for you.\n\n" +
+            "Always in your corner,\nDr. Karan 💛"
+        },
+        {
+          id: "case4",
+          icon: "🌀",
+          title: "Case File #04: Overthinking Overload",
+          letter:
+            "BRAIN SCAN ALERT 🧠:\n\n" +
+            "Your brain appears to have 47 browser tabs open at once, and three of them are playing dramatic background music!\n\n" +
+            "Take one deep breath in… and let it out. You don’t have to solve next month’s problems tonight. Just focus on tonight’s dinner, cozy pajamas, and letting me hype you up whenever you doubt yourself.\n\n" +
+            "Prescribing 100% chill,\nDr. Karan 🩺\n\nP.S. Your brain is not a 24/7 customer-support department. It is allowed to close for maintenance, preferably with snacks."
+        },
+        {
+          id: "case5",
+          icon: "🤒",
+          title: "Case File #05: Unauthorized Fever Attack",
+          letter:
+            "WHO APPROVED THIS BUG?! 🦠🚫\n\n" +
+            "I checked the clinic calendar and nobody gave that fever permission to bother the strongest girl in the city! Please drink warm water/chai, eat proper food, and take your medicine on time.\n\n" +
+            "If you feel even 1% low, page me immediately. Your recovery is my #1 priority.\n\n" +
+            "Get well super soon,\nDr. Karan 💛"
+        },
+        {
+          id: "case6",
+          icon: "🌟",
+          title: "Case File #06: Amnesia Regarding Your Own Awesomeness",
+          letter:
+            "PERMANENT MEDICAL RECORD:\n\n" +
+            "In case your memory glitched today, here are the scientific facts:\n" +
+            "1. You are braver than you give yourself credit for.\n" +
+            "2. You bring warmth and good vibes wherever you go.\n" +
+            "3. Even on your lowest-energy days, you’re still my absolute favorite human to cheer for.\n\n" +
+            "Endlessly proud of you, Suhani! 🌻💛\nDr. Karan"
+        }
+      ];
+
+      let openEnvId = null;
+
+      function renderEnvelopes() {
+        const grid = $("#envGrid");
+        grid.innerHTML = "";
+        envelopes.forEach((env) => {
+          const isOpen = openEnvId === env.id;
+          const card = document.createElement("div");
+          card.className = "env-card" + (isOpen ? " opened" : "");
+
+          if (!isOpen) {
+            card.innerHTML = `
+              <span class="env-flap">${env.icon}</span>
+              <span class="env-title">${env.title}</span>
+              <span class="env-tap-hint">Break wax seal to inspect ✉️</span>
+            `;
+            card.onclick = () => {
+              playChime([523.25, 659.25, 783.99]);
+              openEnvId = env.id;
+              floatHearts(18, 4);
+              renderEnvelopes();
+              setTimeout(() => typeText($("#activeLetter"), env.letter, 22), 180);
+            };
+          } else {
+            card.innerHTML = `
+              <div class="env-header-open">
+                <strong style="font:800 17.5px 'Baloo 2',sans-serif;">${env.icon} ${env.title}</strong>
+                <button type="button" class="btn sm lil">Seal ✕</button>
+              </div>
+              <div class="env-letter-box" id="activeLetter"></div>
+              <div class="row" style="margin-bottom:0; justify-content:flex-end;">
+                <button type="button" class="btn sm sky copy-case-btn">📋 Copy Case Note</button>
+              </div>
+            `;
+            card.querySelector("button").onclick = (e) => {
+              e.stopPropagation();
+              playChime([440]);
+              openEnvId = null;
+              renderEnvelopes();
+            };
+            card.querySelector(".copy-case-btn").onclick = (e) => {
+              e.stopPropagation();
+              playChime([659.25]);
+              copyToClipboard(`${env.title}\n\n${env.letter}`, "Case note copied! 💌");
+            };
+          }
+          grid.appendChild(card);
+        });
+      }
+      renderEnvelopes();
+
+      /* =========================================================
+         6. PAGE 3: THE PHARMACY PILL & MEME JAR (18+ NOTES)
+         ========================================================= */
+      const jarRemedies = [
+        // Dramatic Diagnosis (6)
+        { cat: "diagnosis", label: "🩺 Dramatic Diagnosis", text: "“CRITICAL ALERT: Patient Suhani is suffering from dangerously low levels of Chocolate & Compliments. Administer snacks immediately!”" },
+        { cat: "diagnosis", label: "🩺 Dramatic Diagnosis", text: "“Lab results confirm 100% chance that Suhani has been working too hard and resting too little. Sentence: Mandatory couch time!”" },
+        { cat: "diagnosis", label: "🩺 Dramatic Diagnosis", text: "“Pulse check complete! Heartbeat rhythm spells out: ‘I-N-E-E-D-C-H-A-I-A-N-D-A-N-A-P’. Science never lies!”" },
+        { cat: "diagnosis", label: "🩺 Dramatic Diagnosis", text: "“WARNING: Severe ‘Trying To Do Everything Alone’ syndrome detected. Reminder that Dr. Karan is legally on your team!”" },
+        { cat: "diagnosis", label: "🩺 Dramatic Diagnosis", text: "“X-ray shows a massive buildup of unspent vacation energy and overdue laughter. Treatment starts tonight!”" },
+        { cat: "diagnosis", label: "🩺 Dramatic Diagnosis", text: "“Stethoscope check reveals you are 99% pure sunshine and 1% stubbornness about drinking enough water.”" },
+
+        // Sweet Syrup (6)
+        { cat: "syrup", label: "🍯 Sweet Syrup", text: "“No matter how hectic or unfamiliar a new city feels, you always have a safe, warm corner right here with me. Always!”" },
+        { cat: "syrup", label: "🍯 Sweet Syrup", text: "“If kindness were a medical degree, Suhani, you’d be Chief Surgeon of the entire planet. Take gentle care of yourself today.”" },
+        { cat: "syrup", label: "🍯 Sweet Syrup", text: "“Just a spoonful of reminder: you make life infinitely brighter just by being in it. Never forget how deeply appreciated you are.”" },
+        { cat: "syrup", label: "🍯 Sweet Syrup", text: "“Even on days when you feel 40%, you’re still braver, kinder, and more inspiring than anyone I know. So proud of you!”" },
+        { cat: "syrup", label: "🍯 Sweet Syrup", text: "“Sending a pocket-sized dose of calm, warm tea vibes, and a giant invisible hug straight to your screen right now. 💛”" },
+        { cat: "syrup", label: "🍯 Sweet Syrup", text: "“You don’t have to carry a heavy day by yourself. One message and your best friend is right there to listen.”" },
+
+        // Funny Tonic (6)
+        { cat: "tonic", label: "😂 Funny Tonic", text: "“HYDRATION POLICE 🚨💧: Drop the phone, sip some water, and stop acting like a houseplant that survives purely on vibes!”" },
+        { cat: "tonic", label: "😂 Funny Tonic", text: "“Medical fact: Eating your favorite dessert cancels out 87% of a stressful day. (Source: Dr. Karan’s totally real textbook.)”" },
+        { cat: "tonic", label: "😂 Funny Tonic", text: "“If anyone stresses you out today, refer them directly to my clinic so I can prescribe them a 3-hour lecture on how awesome you are.”" },
+        { cat: "tonic", label: "😂 Funny Tonic", text: "“Side effects of being Suhani’s best friend include: uncontrollable pride in your achievements and constant reminders to eat lunch.”" },
+        { cat: "tonic", label: "😂 Funny Tonic", text: "“Breaking News: Local girl conquers new city & new job while wrapped in a cozy blanket. Doctors are amazed!”" },
+        { cat: "tonic", label: "😂 Funny Tonic", text: "“Dose of reality: You’re stuck with Dr. Karan’s terrible jokes until we’re 90. Might as well laugh now and get used to it! 😄”" }
+      ];
+
+      // Extra surprise doses: more playful, specific, and sweet.
+      jarRemedies.push(
+        { cat: "tonic", label: "😂 Certified Nonsense", text: "“URGENT: Your pillow has filed a complaint. Apparently you keep postponing quality time with it. Please report to bed for a 20-minute meeting. Attendance is compulsory; pajamas are the uniform.”" },
+        { cat: "tonic", label: "🐼 Panda Protocol", text: "“Breaking news from the Department of Cute Affairs: one extremely hardworking human has been spotted forgetting to take breaks. A panda has been assigned to supervise snacks, water, and absolutely unnecessary giggling.”" },
+        { cat: "tonic", label: "🕵️ Smile Investigation", text: "“This is a formal investigation. We have reason to believe you are hiding at least one smile. Please surrender it immediately. Refusal will result in Dr. Karan telling an even worse joke.”" },
+        { cat: "syrup", label: "🌷 Pocket Sunshine", text: "“A tiny reminder for your pocket: you do not have to be productive every minute to be wonderful. Take your time, enjoy one small thing, and let today be gentle with you.”" },
+        { cat: "syrup", label: "💌 A Little Note", text: "“If this screen could deliver flowers, it would send you a whole garden. Until then, consider this message a small bouquet: you matter, you are appreciated, and you deserve kind days.”" },
+        { cat: "diagnosis", label: "🧁 Dessert Emergency", text: "“Lab report: dangerously low dessert happiness detected. Recommended treatment: your favourite sweet treat, enjoyed slowly, with zero guilt and absolutely no sharing requirement unless you feel generous.”" },
+        { cat: "diagnosis", label: "📱 Notification Overload", text: "“Scan complete: too many tabs open in the brain. Close the imaginary spreadsheet, silence the tiny committee of overthinking, and do one thing at a time. The committee can reconvene tomorrow.”" },
+        { cat: "tonic", label: "🐣 Tiny Boss Energy", text: "“Attention! A tiny chick has been appointed your motivation manager. Its first instruction: stand up, stretch if you want, sip water, and remember that even small progress deserves a mini celebration.”" }
+      );
+
+      let activeJarCat = "all";
+      let lastJarText = "";
+
+      $("#jarFilters").querySelectorAll(".cat-pill").forEach((btn) => {
+        btn.onclick = () => {
+          playChime([523.25]);
+          activeJarCat = btn.dataset.cat;
+          $("#jarFilters").querySelectorAll(".cat-pill").forEach((b) => b.classList.toggle("active", b === btn));
+          dispenseRemedy();
+        };
+      });
+
+      function dispenseRemedy() {
+        playChime([523.25, 659.25, 880]);
+        const pool = activeJarCat === "all"
+          ? jarRemedies
+          : jarRemedies.filter((r) => r.cat === activeJarCat);
+
+        let chosen;
+        do {
+          chosen = pickRandom(pool);
+        } while (chosen.text === lastJarText && pool.length > 1);
+        lastJarText = chosen.text;
+
+        const icon = $("#jarIcon");
+        icon.classList.remove("shake");
+        void icon.offsetWidth;
+        icon.classList.add("shake");
+
+        $("#jarTag").textContent = chosen.label;
+        typeText($("#jarText"), chosen.text, 30);
+        heartPop($("#jarNoteBox"));
+        floatHearts(20, 5);
+      }
+
+      $("#drawJarBtn").onclick = dispenseRemedy;
+      $("#jarIcon").onclick = dispenseRemedy;
+      $("#copyJarBtn").onclick = () => {
+        playChime([659.25]);
+        const txt = $("#jarText").textContent;
+        copyToClipboard(`${txt} — Prescribed by Dr. Karan 🩺💛`, "Prescription note copied! 💊");
+      };
+
+      /* =========================================================
+         7. PAGE 4: OFFICIAL HOSPITAL PRESCRIPTION PAD
+         ========================================================= */
+      const rxItems = [
+        "500mg Emergency Blanket Burrito (wrap tightly & refuse to move) 🌯",
+        "2 Cups Warm Chai, Soup, or Ginger Tea IV Drip 🍵",
+        "1000ml Water Hydration Protocol (no houseplant behavior!) 💧",
+        "1 Full Nutritious Meal + Mandatory Bonus Dessert 🍲🍫",
+        "Zero Adulting & Guilt-Free Bedrest for the rest of today 😴"
+      ];
+
+      let rxChecked = [false, false, false, false, false];
+      try {
+        const savedRx = JSON.parse(localStorage.getItem("dr_karan_rx"));
+        if (Array.isArray(savedRx) && savedRx.length === rxItems.length) {
+          rxChecked = savedRx;
+        }
+      } catch (e) {}
+
+      function renderPrescription() {
+        const box = $("#rxChecklist");
+        box.innerHTML = "";
+        rxItems.forEach((label, idx) => {
+          const isDone = rxChecked[idx];
+          const row = document.createElement("div");
+          row.className = "rx-item" + (isDone ? " checked" : "");
+          row.innerHTML = `
+            <div class="rx-box">${isDone ? "✓" : ""}</div>
+            <div class="rx-label">${label}</div>
+          `;
+          row.onclick = () => {
+            rxChecked[idx] = !rxChecked[idx];
+            try { localStorage.setItem("dr_karan_rx", JSON.stringify(rxChecked)); } catch (e) {}
+            if (rxChecked[idx]) {
+              playChime([587.33, 783.99]);
+              floatHearts(14, 3);
+            } else {
+              playChime([440]);
+            }
+            renderPrescription();
+          };
+          box.appendChild(row);
+        });
+
+        const doneCount = rxChecked.filter(Boolean).length;
+        $("#rxProgress").textContent = doneCount === rxItems.length
+          ? "🎉 5/5 Dosages Taken! Dr. Karan declares you a Model VIP Patient! 🩺💛"
+          : `${doneCount} of ${rxItems.length} clinical dosages completed today 💛`;
+      }
+      renderPrescription();
+
+      /* =========================================================
+         8. PAGE 5: PATIENT VITALS & X-RAY SCAN (6 CARDS)
+         ========================================================= */
+      const xrayScans = [
+        {
+          code: "SCAN #01 • HEART",
+          prompt: "🫀 Tap to X-Ray Heart Chamber",
+          finding: "100% Pure Gold! Warning: Too generous and caring toward everyone else—needs immediate self-pampering."
+        },
+        {
+          code: "SCAN #02 • COURAGE",
+          prompt: "🦁 Tap to Scan Bravery Levels",
+          finding: "Off the charts! Moving to a new city & tackling a new job takes serious guts—Dr. Karan is in awe."
+        },
+        {
+          code: "SCAN #03 • SMILE",
+          prompt: "😊 Tap to Scan Smile Reflex",
+          finding: "Highly contagious! Proven to cure bad moods within a 50-kilometer radius instantaneously."
+        },
+        {
+          code: "SCAN #04 • RESILIENCE",
+          prompt: "🛡️ Tap to Check Toughness",
+          finding: "A truly steady heart! Even when a day feels tiring or things do not go as planned, you keep finding your way forward. Please remember that being strong does not mean doing everything alone; you deserve rest, kindness, and support too. Your quiet determination is something to be proud of, and you deserve to celebrate every little victory along the way."
+        },
+        {
+          code: "SCAN #05 • HUMOR",
+          prompt: "🤣 Tap to Test Laugh Receptors",
+          finding: "Exceptionally bright! Your sense of humour can turn an ordinary moment into a lovely memory. The little laughs, silly conversations, and spontaneous smiles you share make time together feel lighter. Never underestimate how special that warmth is. May life keep giving you countless reasons to laugh until your cheeks hurt—in the happiest possible way!"
+        },
+        {
+          code: "SCAN #06 • BESTIE BOND",
+          prompt: "💛 Tap to Scan Friendship Signal",
+          finding: "Full-strength friendship signal: 5/5 bars! Distance and busy days may change the schedule, but they do not erase the care, respect, and happy memories in a genuine friendship. Whenever you need a laugh, a little encouragement, or someone to listen, you can reach out. You deserve people who celebrate your good days and support you through the difficult ones. Sending a big dose of appreciation your way!"
+        }
+      ];
+
+      let scannedSet = {};
+      function renderXrays() {
+        const grid = $("#xrayGrid");
+        grid.innerHTML = "";
+        xrayScans.forEach((item, i) => {
+          const isScanned = !!scannedSet[i];
+          const card = document.createElement("div");
+          card.className = "xray-card" + (isScanned ? " scanned" : "");
+          card.innerHTML = `
+            <span class="xray-badge">${item.code}</span>
+            <div style="font:800 16px 'Baloo 2',sans-serif; margin-bottom:4px;">
+              ${isScanned ? "✅ Diagnostic Finding:" : item.prompt}
+            </div>
+            <div style="font-size:13.5px; line-height:1.35;">
+              ${isScanned ? "" : "Tap plate to develop X-ray film"}
+            </div>
+          `;
+          card.onclick = () => {
+            scannedSet[i] = !scannedSet[i];
+            playChime(scannedSet[i] ? [523.25, 783.99] : [440]);
+            if (scannedSet[i]) floatHearts(10, 2);
+            renderXrays();
+            if (scannedSet[i]) {
+              const findingNode = grid.children[i].querySelector("div:last-child");
+              typeText(findingNode, item.finding, 24);
+              heartPop(grid.children[i]);
+            }
+          };
+          grid.appendChild(card);
+        });
+      }
+      renderXrays();
+
+      /* =========================================================
+         9. PAGE 6: VIP HOSPITAL VOUCHERS & MEDICAL PASSES
+         ========================================================= */
+      const vouchers = [
+        { id: "v1", icon: "🗣️", title: "1x Unconditional Rant Consultation", desc: "Complain about anything for 60 mins while Dr. Karan agrees with you 100%." },
+        { id: "v2", icon: "🍵", title: "1x Emergency Chai & Snacks Delivery", desc: "Redeemable for your favorite comfort treat—doctor’s orders!" },
+        { id: "v3", icon: "🛋️", title: "1x Excuse From All Chores Pass", desc: "Official medical exemption from adulting, dishes, and replying to boring texts." },
+        { id: "v4", icon: "🌙", title: "1x Midnight Pep Talk Hotline", desc: "Valid at 2 AM or 2 PM whenever you need hype, laughs, or company." },
+        { id: "v5", icon: "🎬", title: "1x Comfort Movie / Show Marathon", desc: "Full authority over the watchlist with zero judgment allowed." },
+        { id: "v6", icon: "🤗", title: "Unlimited Lifetime Bestie Check-Ins", desc: "Never expires. Automatically renews every single day forever." }
+      ];
+
+      let redeemedMap = {};
+      try {
+        redeemedMap = JSON.parse(localStorage.getItem("dr_karan_vouchers")) || {};
+      } catch (e) {}
+
+      function renderVouchers() {
+        const grid = $("#couponGrid");
+        grid.innerHTML = "";
+        vouchers.forEach((v) => {
+          const isUsed = !!redeemedMap[v.id];
+          const card = document.createElement("div");
+          card.className = "coupon-card" + (isUsed ? " redeemed" : "");
+          card.innerHTML = `
+            <div class="coupon-info">
+              <span class="coupon-title">${v.icon} ${v.title}</span>
+              <span class="coupon-desc">${v.desc}</span>
+            </div>
+            <button type="button" class="btn sm ${isUsed ? "mint" : "pink"}">
+              ${isUsed ? "✅ Redeemed" : "Redeem"}
+            </button>
+          `;
+          card.querySelector("button").onclick = () => {
+            redeemedMap[v.id] = true;
+            try { localStorage.setItem("dr_karan_vouchers", JSON.stringify(redeemedMap)); } catch (e) {}
+            playChime([523.25, 659.25, 783.99, 1046.5]);
+            floatHearts(28, 6);
+            renderVouchers();
+            copyToClipboard(
+              `🎟️ VIP HOSPITAL VOUCHER REDEEMED!\nPatient Suhani is cashing in: "${v.title}" (${v.desc})\nSigned & stamped at Dr. Karan’s Emergency Clinic 🩺💛`,
+              "Voucher redeemed & receipt copied to send Karan! 🎟️"
+            );
+          };
+          grid.appendChild(card);
+        });
+      }
+      renderVouchers();
+
+      /* =========================================================
+         10. PAGE 7: INTENSIVE HUG UNIT (IHU) & ONE-TAP REPLIES
+         ========================================================= */
+      let hugCount = 0;
+      try {
+        hugCount = Math.max(0, +localStorage.getItem("dr_karan_hugs") || 0);
+      } catch (e) {}
+
+      const hugMessages = [
+        "⚡ CLEAR!! 10,000 volts of warm bear hug delivered straight to Patient Suhani!",
+        "🧸 Vital signs surging! Stress dropped by 64% and coziness is at critical maximum!",
+        "💛 Emergency best-friend squeeze administered! Side effects: sudden smiling!",
+        "🩺 Dr. Karan confirms: Heartbeat steady, vibes immaculate, hug quota soaring!",
+        "✨ Warning: You have unlocked Unlimited Platinum Hug Insurance for life!"
+      ];
+
+      function updateHugDisplay(animate = false) {
+        $("#hugCounter").textContent = `⚡ Hug Shocks Administered: ${hugCount}`;
+        if (animate) {
+          typeText($("#hugStatus"), pickRandom(hugMessages), 28);
+          heartPop($("#hugBtn"));
+        }
+      }
+      updateHugDisplay(false);
+
+      $("#hugBtn").onclick = () => {
+        hugCount++;
+        try { localStorage.setItem("dr_karan_hugs", String(hugCount)); } catch (e) {}
+        playChime([523.25, 659.25, 783.99, 1046.5]);
+        floatHearts(38, 9);
+        updateHugDisplay(true);
+      };
+
+      const quickReplies = [
+        { label: "😂 “Dr. Karan, your dramatic diagnosis actually made me laugh!”", text: "Dr. Karan, your dramatic clinic diagnosis actually made me laugh so much! Feeling way better already 🩺😂💛" },
+        { label: "🌯 “Reporting in: wrapped in a blanket burrito & drinking water!”", text: "Reporting to Chief of Medicine Dr. Karan: I am wrapped in a blanket burrito and drinking my water like a model patient! 🌯💧💛" },
+        { label: "🤗 “Sending emergency bear hugs back to my favorite fake doctor!”", text: () => `Emergency alert! Patient Suhani just administered ${Math.max(1, hugCount)} bear hug shock${hugCount === 1 ? "" : "s"} right back to Dr. Karan! 🤗🧸💛` },
+        { label: "🍵 “Cashing in my VIP prescription for snacks & zero adulting!”", text: "Official clinic notice: I am cashing in my Dr. Karan prescription for snacks, warm chai, and zero adulting today! 🍵🍫✨" }
+      ];
+
+      function renderReplies() {
+        const grid = $("#replyGrid");
+        grid.innerHTML = "";
+        quickReplies.forEach((rep) => {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "reply-btn";
+          btn.innerHTML = `<span>${rep.label}</span><span style="font-size:18px;">📋</span>`;
+          btn.onclick = () => {
+            playChime([659.25, 880]);
+            const msg = typeof rep.text === "function" ? rep.text() : rep.text;
+            copyToClipboard(msg, "Patient reply copied! Paste it in Karan’s chat 💛");
+          };
+          grid.appendChild(btn);
+        });
+      }
+      renderReplies();
+
+      /* =========================================================
+         11. EXTRA PAGES: POST OFFICE, TINY MISSIONS & FINAL NOTE
+         ========================================================= */
+      const compliments = [
+        "📦 Delivery #01: Dear Suhani, this little parcel contains one very important reminder: you make ordinary moments feel a little brighter just by being yourself. You have a way of bringing warmth into conversations, and that is a lovely quality. I hope you remember that you do not need to be funny, cheerful, helpful, or energetic every single day to be appreciated. Even on your quiet days, you matter just as much. Please accept this imaginary parcel of compliments, one hundred invisible hugs from the kindness department, and a tiny certificate that says: ‘Certified wonderful human — no exam required.’",
+        "🌻 Delivery #02: A reminder from the Department of People Who Deserve Nice Things: please save some of the patience and kindness you give everyone else for yourself. You are allowed to make mistakes, change your mind, feel confused, take breaks, and have days when your only achievement is getting through the day. That still counts! You do not have to earn care by doing everything perfectly. I hope the people around you listen when you speak, notice when you are quiet, respect your feelings, and make you laugh so much that you forget what you were worried about for a little while. Also, please remember to drink water. This parcel is caring, not a substitute for hydration. 😄",
+        "⭐ Delivery #03: Official announcement: your effort has been noticed by the extremely serious and highly qualified Appreciation Committee (currently consisting of one teddy bear and a very emotional stapler). Every little step matters — trying again, learning something new, being patient, helping someone, or choosing to rest when you need it. You do not have to be the best at everything, and you definitely do not need to compare your behind-the-scenes with somebody else’s highlight reel. Keep growing at your own pace. I hope you feel proud of the person you are becoming, and I hope you give yourself the same encouragement you would happily give a friend. You are doing better than you sometimes think. 💛",
+        "🧁 Delivery #04: If today has been tiring, consider this your permission slip to slow down. You do not have to reply to every message immediately, solve every problem before bedtime, or carry the entire world like it is a school bag with no wheels. Take a breath, have something comforting, listen to a song you love, and let a few things wait. Your feelings deserve space, even when they are difficult to explain. I hope you always have someone who can listen without rushing to judge or fix everything. And when you need a laugh, may life send you the kind of silly moment that makes you laugh at the completely wrong time. You deserve softness, support, and peaceful moments too. 🧸",
+        "🐻 Delivery #05: Here is a reminder that you are appreciated for much more than what you achieve or how much you do for other people. Your ideas, your sense of humour, your little habits, your honesty, and the way you see the world all make you wonderfully you. You are not a 24-hour customer-care helpline, so please do not feel you must always be available to everyone. Even the nicest phone needs charging — and honestly, yours deserves the premium charger with the extra-long cable. 😄 I hope you receive the same understanding you offer others, and that you feel safe being honest about what you need. You deserve friendships filled with respect, laughter, trust, and room to be yourself without pretending.",
+        "🌈 Delivery #06: I hope the coming days bring you happy surprises, good news, delicious snacks, comfortable conversations, and at least one moment that makes you laugh until your cheeks hurt. I hope you meet people who celebrate your wins without making you feel small, and who stay kind when things do not go according to plan. When life gets confusing, remember that you can pause, ask for help, and begin again. There is no deadline for figuring everything out. Please keep a little time for the things that make you feel peaceful and excited. And if a day goes completely wrong, may tomorrow arrive with better timing, better snacks, and fewer unnecessary plot twists. You deserve a life with plenty of joy, respect, support, and reasons to smile. 💖",
+        "🍰 Delivery #07: This note is a tiny reminder that you do not need to be perfect to be precious to the people who care about you. You can be a little dramatic, forget why you entered a room, laugh at your own jokes, make a silly decision about snacks, and still be an excellent human being. In fact, the world could use more people who are genuine rather than pretending to have everything sorted. Be proud of your kindness, but remember that your boundaries matter too. Say no when you need to, ask questions when you are unsure, and never feel silly for needing encouragement. Sending you a pocketful of good wishes and a completely unnecessary but very official gold star. ⭐",
+        "🦋 Delivery #08: If I could put one thing in this parcel, it would be the ability to see yourself through the kind eyes of the people who appreciate you. You might notice your mistakes first, but others may notice your effort, your humour, your thoughtfulness, and the way you make a room feel more welcoming. Please do not be too hard on yourself while you are learning and growing. You are allowed to have unfinished plans and uncertain days. Keep the little joys close, celebrate progress in every size, and remember that asking for support is a strength, not a failure. May you always find people who make life feel lighter — and may your snacks never mysteriously disappear from the fridge. 😄"
+      ];
+      let complimentIndex = -1;
+      $("#openCompliment").onclick = () => {
+        complimentIndex = (complimentIndex + 1) % compliments.length;
+        playChime([523.25, 659.25, 783.99]);
+        typeText($("#complimentDisplay"), compliments[complimentIndex], 25);
+        heartPop($("#complimentDisplay"));
+        floatHearts(12, 4);
+      };
+
+      const tinyMissions = [
+        "🐥 Mission: The Cozy Sip Challenge. Find a drink you enjoy, get comfortable, and take three slow sips without rushing. For the next minute, you are not required to solve the world’s problems. The tiny committee has temporarily paused all emergencies except snack emergencies. Mission reward: a well-deserved little moment for yourself.",
+        "🎧 Mission: Soundtrack Your Main-Character Moment. Play one song that makes you feel happy, calm, or wonderfully silly. You can sing along, tap your fingers, or simply listen. No dance skills are required; the floor has agreed not to judge. Take this tiny break and let the music do some of the work.",
+        "🍓 Mission: Snack Appreciation Ceremony. If you are hungry, enjoy a snack or fruit and give it your full attention for a moment. Notice the taste and enjoy the break. The snack committee would like to remind you that eating is not a competition and there are no points for skipping treats. Please hydrate too — the water bottle is waiting for its supporting role.",
+        "🌤️ Mission: Find One Small Lovely Thing. Look outside or around your room and notice one thing you like: a colour, a cloud, a plant, a comfortable corner, or even a very determined little dust particle. You do not need to take a photo or write a report. Just let yourself notice something pleasant. Congratulations, you have completed a tiny observation mission.",
+        "💬 Mission: Send a Little Kindness. If you feel like it, send a short kind message to someone you appreciate — or write a kind sentence to yourself. It can be as simple as ‘I hope your day is going well.’ No grand speech needed. The mission is about sharing a little warmth, not starting a 47-message conversation when you wanted a quiet evening.",
+        "🧸 Mission: Give Your Brain a Mini Holiday. Put your screen aside for a few minutes, stretch gently if that feels comfortable, and let your eyes rest. You do not need to become a productivity legend today. The teddy bear has taken over notification duty and promises to handle absolutely nothing. Come back when you feel ready.",
+        "🎨 Mission: Create Something Ridiculously Small. Draw a star, a flower, a smiley face, or a potato wearing a crown. It does not need to look perfect — the potato has no artistic expectations. Give yourself two minutes to play and make something just for fun. Creativity points are awarded for trying, not for resemblance.",
+        "💛 Mission: Name Three Things You Deserve. Think of three things you deserve today, such as kindness, rest, respect, patience, laughter, or support. You do not have to earn these by finishing every task. Pick one small way to give yourself a little of that kindness right now. Mission status: being human, successfully.",
+        "🌷 Mission: Make Tomorrow One Percent Kinder. Choose one tiny thing that could make tomorrow easier — putting a book in your bag, setting out a water bottle, or deciding what snack you might enjoy. Keep it small. We are planning a gentle tomorrow, not launching a space mission. Once you choose, you are done. Well played, Commander Suhani!"
+      ];
+      $("#drawMission").onclick = () => {
+        playChime([587.33, 698.46, 880]);
+        typeText($("#missionDisplay"), pickRandom(tinyMissions), 24);
+        heartPop($("#missionDisplay"));
+      };
+
+      let finalLetterOpened = false;
+      $("#finalSeal").onclick = () => {
+        if (finalLetterOpened) return;
+        finalLetterOpened = true;
+        playChime([523.25, 659.25, 783.99, 1046.5]);
+        const finalMessage = "Dear Suhani,\n\nYou made it to the last page! Please collect your imaginary medal, your tiny bouquet, and a certificate for successfully completing the most unnecessarily dramatic clinic tour. The reception desk would also like to inform you that your bill is zero rupees because kindness is free and the doctor has misplaced the payment machine. 😄\n\nJokes aside, I hope these pages have given you a few smiles and reminded you how much you deserve to be appreciated. You have your own way of making ordinary moments feel brighter. Your thoughts matter, your feelings matter, and you deserve people who listen with patience instead of making you feel that you are asking for too much. You do not have to be cheerful every minute, say yes to everything, or pretend that everything is fine. It is okay to have quiet days, confusing days, and days when you simply need someone to understand.\n\nPlease remember to take care of yourself in the small, everyday ways too. Eat when you are hungry, drink some water, get enough rest when you can, and give yourself permission to pause. You are allowed to make mistakes and learn at your own pace. You do not need to have your whole future planned out, and you do not need to compare your journey with anybody else’s. One small step is still progress. And if a day feels difficult, you can ask for help; you never have to prove that you can manage absolutely everything alone.\n\nI hope life brings you kind people, happy surprises, peaceful mornings, silly laughter, exciting opportunities, and enough lovely memories to make even an ordinary week feel special. I hope you keep the confidence to try new things, the courage to speak up for yourself, and the softness to remain kind without forgetting your own needs. May your problems become smaller, your favourite snacks stay plentiful, and your phone battery somehow remain above 20% for once.\n\nAnd whenever you forget how much good you bring into the world, come back to this reminder: you are valued, you are worth listening to, and you deserve care and respect simply because you are you. No performance, no perfect day, and no achievement required.\n\nWith appreciation, friendly support, a pocketful of silly jokes, and one very imaginary stethoscope,\nDr. Karan 🩺💛\n\nP.S. The clinic is now closed, but the kindness department is open 24/7. The teddy bear is in charge of reception. Please be nice to him; he is doing his best.";
+        typeText($("#finalLetter"), finalMessage, 27);
+        heartPop($("#finalSeal"));
+        floatHearts(24, 8);
+      };
+
+      // Initialize Clinic Wards & Routing
+      buildNavAndDirectory();
+      syncRoute();
+    })();
+  </script>
+</body>
+</html>
